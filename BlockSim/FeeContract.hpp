@@ -46,7 +46,10 @@ class FeeContract {
 
     public:
         FeeContract();
-        FeeContract(Value initial_total_value);
+
+        // We need to distinguish from default constructor
+        // should be used with null as parameter
+        FeeContract(const char filepath[]);
 
         std::pair<Value, std::unique_ptr<FeeContract>> claimAndCollect(Value collected);
 

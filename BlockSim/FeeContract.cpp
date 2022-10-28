@@ -33,13 +33,17 @@ Value FeeContract::Contract::nextClaim() {
 
 FeeContract::FeeContract() {};
 
-FeeContract::FeeContract(Value initial_total_value) {
+FeeContract::FeeContract(const char filepath[]) {
     using namespace nlohmann;
     
     std::vector<std::pair<ContractCount, HeightType>> initial_split;
-    std::fstream f(FEE_CONTRACT_FILE);
+    std::fstream f(filepath == nullptr ? FEE_CONTRACT_FILE : filepath);
     json data = json::parse(f);
-    m_assert(data.contains("contracts"), "Missing json parameters");
+    m_assert(data.contains("contracts") &&
+            data.contains("value"),
+            "Missing json parameters");
+
+    Value initial_total_value = data.at("value").get<Value>();
     data = data.at("contracts");
 
     ContractCount total(0);
