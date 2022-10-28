@@ -1,0 +1,20 @@
+{
+    "contracts": [
+        {
+            "percentage": 10,
+            "length": 2016
+        },
+        {
+            "percentage": 20,
+            "length": 4032
+        },
+        {
+            "percentage": 30,
+            "length": 6048
+        },
+        {
+            "percentage": 40,
+            "length": 8064
+        }
+    ]
+}
