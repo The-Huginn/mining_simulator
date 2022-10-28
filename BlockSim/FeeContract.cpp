@@ -39,6 +39,8 @@ FeeContract::FeeContract(const char filepath[]) {
     std::vector<std::pair<ContractCount, HeightType>> initial_split;
     std::fstream f(filepath == nullptr ? FEE_CONTRACT_FILE : filepath);
     json data = json::parse(f);
+    f.close();
+
     m_assert(data.contains("contracts") &&
             data.contains("value"),
             "Missing json parameters");

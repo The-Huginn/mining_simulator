@@ -50,6 +50,7 @@ FeeSimulator::FeeSimulator() {
 
     std::ifstream f(FEE_SIMULATOR_FILE);
     json data = json::parse(f);
+    f.close();
 
     m_assert(data.contains("length") &&
             data.contains("mean") &&
