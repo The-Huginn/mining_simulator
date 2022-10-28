@@ -48,7 +48,7 @@ FeeSimulator::FeeSimulator() {
 
     Value mean(0), deviation(0);
 
-    std::ifstream f(PROFITABILITY_FILE);
+    std::ifstream f(FEE_SIMULATOR_FILE);
     json data = json::parse(f);
 
     m_assert(data.contains("length") &&

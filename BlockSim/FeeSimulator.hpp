@@ -15,11 +15,11 @@
 
 // Stateless class so we do not need to reet it
 class FeeSimulator {
+    #define FEE_SIMULATOR_FILE "feeSimulation.json"
 
     private:
 
         enum EpochType {CONSTANT = 0, LINEAR, NORMAL};
-        #define PROFITABILITY_FILE "feeSimulation.json"
 
         // Stateless class so we do not need to reset it
         class FeeSimulatorEpoch {
