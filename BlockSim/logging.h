@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 6/6/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 10/28/22
+//  Copyright © 2016 Rastislav Budinsky. All rights reserved.
+//
 
 #ifndef logging_h
 #define logging_h
@@ -12,8 +15,8 @@
 
 
 #define _ERROROUTPUT 1
-//#define _GAMEINFO 1
-//#define _COMMENTARY 1
+#define _GAMEINFO 1
+#define _COMMENTARY 1
 
 #ifdef _GAMEINFO
 #define GAMEINFO(arg) std::cout << arg
@@ -38,6 +41,8 @@
 #else
 #define ERROR(arg)
 #endif
+
+#define m_assert(exp, msg) assert(((void)(msg), (exp)))
 
 
 #endif /* logging_h */

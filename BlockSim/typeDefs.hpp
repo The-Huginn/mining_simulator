@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 6/15/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 10/28/22
+//  Copyright © 2016 Rastislav Budinsky. All rights reserved.
+//
 
 #ifndef typeDefs_hpp
 #define typeDefs_hpp
@@ -91,6 +94,7 @@ using BlockCount = CountType;
 
 using StratWeight = WeightType;
 using MinerCount = CountType;
+using ContractCount = CountType;
 
 #endif
 
@@ -103,6 +107,7 @@ ValueType rawValue(ValueRate value);
 
 CountType rawCount(MinerCount count);
 CountType rawCount(BlockCount count);
+CountType rawCount(ContractCount count);
 
 TimeType rawBlockRate(BlockRate rate);
 
