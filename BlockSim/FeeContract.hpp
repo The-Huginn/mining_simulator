@@ -24,6 +24,8 @@
 
 class FeeContract {
 
+    #define FEE_CONTRACT_FILE "feeContracts.json"
+
     private:
         class Contract {
             private:
@@ -44,7 +46,7 @@ class FeeContract {
 
     public:
         FeeContract();
-        FeeContract(std::vector<std::pair<ContractCount, HeightType>> initial_split, Value initial_total_value);
+        FeeContract(Value initial_total_value);
 
         std::pair<Value, std::unique_ptr<FeeContract>> claimAndCollect(Value collected);
 
