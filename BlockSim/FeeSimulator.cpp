@@ -15,6 +15,7 @@
 #include <random>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 FeeSimulator::FeeSimulatorEpoch::FeeSimulatorEpoch(HeightType start_, EpochType type_, const Value values_[]) : start(start_), type(type_) {
     for (int i = 0; i < TOTAL; i++) {
@@ -43,7 +44,7 @@ Value FeeSimulator::FeeSimulatorEpoch::getValue(const HeightType current, const 
     return ret;
 }
 
-FeeSimulator::FeeSimulator() {
+FeeSimulator::FeeSimulator(BlockRate secondsPerBlock_) :secondsPerBlock(secondsPerBlock_) {
     using namespace nlohmann;
 
     Value mean(0), deviation(0);
@@ -114,19 +115,18 @@ unsigned int FeeSimulator::getCurrentEpoch(const BlockHeight current, unsigned i
     return getCurrentEpoch(current, begin, mid - 1);
 }
 
-/*
-    We firstly check if we already have it cached, otherwise we generate new value
-*/
-Value FeeSimulator::getValue(BlockHeight current) {
+Value FeeSimulator::getValue(BlockTime from, BlockTime until) {
+    unsigned int current = rawTime(from) / rawBlockRate(secondsPerBlock);
+    Value reward(0);
 
-    if (snapshots.size() > current)
-        return snapshots[current];
+    do {
+        TimeType start = std::max(from, secondsPerBlock * current);
+        TimeType end = std::min(until, secondsPerBlock * (current + 1));
+        reward += snapshots[current] * secondsPerBlock / (end - start);
+        current++;
+    } while (current <= rawTime(until) / rawBlockRate(secondsPerBlock));
 
-    unsigned int currentEpoch = getCurrentEpoch(current, 0, timeline.size() - 1);
-    BlockHeight end = currentEpoch == timeline.size() - 1 ? last : timeline[currentEpoch + 1].getStart();
-
-    snapshots.push_back(timeline[currentEpoch].getValue(current, end));
-    return snapshots.back();
+    return reward;
 }
 
 const BlockHeight FeeSimulator::numberOfBlocks() {
@@ -135,4 +135,11 @@ const BlockHeight FeeSimulator::numberOfBlocks() {
 
 void FeeSimulator::reset() {
     snapshots.clear();
+
+    for (unsigned int i = 0; i < last; i++) {
+        unsigned int currentEpoch = getCurrentEpoch(i, 0, timeline.size() - 1);
+        BlockHeight end = currentEpoch == timeline.size() - 1 ? last : timeline[currentEpoch + 1].getStart();
+
+        snapshots.push_back(timeline[currentEpoch].getValue(i, end));
+    }
 }

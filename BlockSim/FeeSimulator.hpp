@@ -46,13 +46,14 @@ class FeeSimulator {
         std::vector<FeeSimulatorEpoch> timeline;
         std::vector<Value> snapshots;
         HeightType last;
+        BlockRate secondsPerBlock;
 
         unsigned int getCurrentEpoch(const BlockHeight current, unsigned int begin, unsigned int end);
 
     public:
-        FeeSimulator();
+        FeeSimulator(BlockRate secondsPerBlock_);
 
-        Value getValue(HeightType current);
+        Value getValue(BlockTime from, BlockTime until);
 
         const BlockHeight numberOfBlocks();
 
