@@ -114,12 +114,25 @@ unsigned int FeeSimulator::getCurrentEpoch(const BlockHeight current, unsigned i
     return getCurrentEpoch(current, begin, mid - 1);
 }
 
+/*
+    We firstly check if we already have it cached, otherwise we generate new value
+*/
 Value FeeSimulator::getValue(BlockHeight current) {
+
+    if (snapshots.size() > current)
+        return snapshots[current];
+
     unsigned int currentEpoch = getCurrentEpoch(current, 0, timeline.size() - 1);
     BlockHeight end = currentEpoch == timeline.size() - 1 ? last : timeline[currentEpoch + 1].getStart();
-    return timeline[currentEpoch].getValue(current, end);
+
+    snapshots.push_back(timeline[currentEpoch].getValue(current, end));
+    return snapshots.back();
 }
 
 const BlockHeight FeeSimulator::numberOfBlocks() {
     return last;
+}
+
+void FeeSimulator::reset() {
+    snapshots.clear();
 }
