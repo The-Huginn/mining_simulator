@@ -47,13 +47,25 @@ class FeeSimulator {
         std::vector<Value> snapshots;
         HeightType last;
         BlockRate secondsPerBlock;
+        bool fullMempool;   // decides how we calculate fees
+        HeightType addHeight;    // decides how we add value to chain based on fullMempool
 
         unsigned int getCurrentEpoch(const BlockHeight current, unsigned int begin, unsigned int end);
 
     public:
         FeeSimulator(BlockRate secondsPerBlock_);
 
-        Value getValue(BlockTime from, BlockTime until);
+        /**
+         * @brief Based on fullMempool variable we decide, whether transaction fees are
+         *  true: calculated based on reward from fees in configuration
+         *  false: calculated based on time from average fees in configuration per block included in timeframe.
+        */
+        Value getValue(BlockTime from, BlockTime until, BlockHeight height);
+
+        /**
+         * @brief Calls getValue internally, remembers in case of fullMempool if the value was already added
+        */
+       Value addValueToChain(BlockTime from, BlockTime until, BlockHeight height);
 
         const BlockHeight numberOfBlocks();
 

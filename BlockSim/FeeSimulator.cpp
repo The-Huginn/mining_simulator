@@ -44,7 +44,7 @@ Value FeeSimulator::FeeSimulatorEpoch::getValue(const HeightType current, const 
     return ret;
 }
 
-FeeSimulator::FeeSimulator(BlockRate secondsPerBlock_) :secondsPerBlock(secondsPerBlock_) {
+FeeSimulator::FeeSimulator(BlockRate secondsPerBlock_) :secondsPerBlock(secondsPerBlock_), addHeight(0) {
     using namespace nlohmann;
 
     Value mean(0), deviation(0);
@@ -55,11 +55,13 @@ FeeSimulator::FeeSimulator(BlockRate secondsPerBlock_) :secondsPerBlock(secondsP
 
     m_assert(data.contains("length") &&
             data.contains("mean") &&
-            data.contains("deviation"),
+            data.contains("deviation") &&
+            data.contains("fullMempool"),
             "Missing parameters in json");
 
     last = data.at("length").get<int>();
     mean = data.at("mean").get<Value>();
+    fullMempool = data.at("fullMempool").get<bool>();
     deviation = data.at("deviation").get<Value>();
 
     m_assert(last > 0 &&
@@ -115,18 +117,36 @@ unsigned int FeeSimulator::getCurrentEpoch(const BlockHeight current, unsigned i
     return getCurrentEpoch(current, begin, mid - 1);
 }
 
-Value FeeSimulator::getValue(BlockTime from, BlockTime until) {
-    unsigned int current = rawTime(from) / rawBlockRate(secondsPerBlock);
+Value FeeSimulator::getValue(BlockTime from, BlockTime until, BlockHeight height) {
+
     Value reward(0);
 
-    do {
-        TimeType start = std::max(from, secondsPerBlock * current);
-        TimeType end = std::min(until, secondsPerBlock * (current + 1));
-        reward += snapshots[current] * secondsPerBlock / (end - start);
-        current++;
-    } while (current <= rawTime(until) / rawBlockRate(secondsPerBlock));
+    if (fullMempool) {
+        reward = snapshots[height];
+    } else {
+        unsigned int current = rawTime(from) / rawBlockRate(secondsPerBlock);
+
+        do {
+            TimeType start = std::max(from, secondsPerBlock * current);
+            TimeType end = std::min(until, secondsPerBlock * (current + 1));
+            reward += snapshots[current] * secondsPerBlock / (end - start);
+            current++;
+        } while (current <= rawTime(until) / rawBlockRate(secondsPerBlock));
+    }
 
     return reward;
+}
+
+Value FeeSimulator::addValueToChain(BlockTime from, BlockTime until, BlockHeight height) {
+
+    // Check if we already added value for current height
+    if (fullMempool && height + 1== addHeight)
+        return Value(0);
+
+    if (fullMempool)
+        addHeight++;
+
+    return getValue(from, until, height);
 }
 
 const BlockHeight FeeSimulator::numberOfBlocks() {
@@ -135,6 +155,7 @@ const BlockHeight FeeSimulator::numberOfBlocks() {
 
 void FeeSimulator::reset() {
     snapshots.clear();
+    addHeight = 0;
 
     for (unsigned int i = 0; i < last; i++) {
         unsigned int currentEpoch = getCurrentEpoch(i, 0, timeline.size() - 1);
