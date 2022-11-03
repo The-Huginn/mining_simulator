@@ -27,10 +27,9 @@ public:
     Value value;
     Value txFeesInChain;
     Value valueInChain;
-    // Value blockReward;
+    Value blockReward;
     
-    // Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds, Value txFees, BlockHeight height, Value txFeesInChain, Value valueInChain, Value blockReward);
-    Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds, Value txFees, BlockHeight height, Value txFeesInChain, Value valueInChain);
+    Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds, Value txFees, BlockHeight height, Value txFeesInChain, Value valueInChain, Value blockReward);
     
     Block(BlockValue blockReward);
     Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees);
@@ -41,7 +40,7 @@ public:
     BlockTime getTimeBroadcast() const;
     bool isBroadcast() const;
     
-    // Value nextBlockReward() const;
+    Value nextBlockReward() const;
     
     bool minedBy(const Miner *miner) const;
     void print(std::ostream& where, bool isPublished) const;
