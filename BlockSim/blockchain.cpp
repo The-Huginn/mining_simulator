@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 5/25/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 10/31/22.
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 #include "blockchain.hpp"
 #include "utils.hpp"
@@ -21,7 +24,8 @@ Blockchain::Blockchain(BlockchainSettings blockchainSettings) :
     valueNetworkTotal(0),
     timeInSecs(0),
     secondsPerBlock(blockchainSettings.secondsPerBlock),
-    transactionFeeRate(blockchainSettings.transactionFeeRate),
+    feeSimulator(FeeSimulator(blockchainSettings.secondsPerBlock)),
+    feeContract(FeeContract(nullptr)),
     _maxHeightPub(0)
 {
     _blocks.reserve(rawCount(blockchainSettings.numberOfBlocks) * 2);
@@ -32,6 +36,7 @@ Blockchain::Blockchain(BlockchainSettings blockchainSettings) :
 
 std::unique_ptr<Block> Blockchain::createBlock(const Block *parent, const Miner *miner, Value value) {
     Value txFees = value - parent->nextBlockReward();
+
     if (_oldBlocks.size() == 0) {
         return std::make_unique<Block>(parent, miner, getTime(), txFees);
     }
@@ -46,7 +51,10 @@ void Blockchain::reset(BlockchainSettings blockchainSettings) {
     valueNetworkTotal = 0;
     timeInSecs = BlockTime(0);
     secondsPerBlock = blockchainSettings.secondsPerBlock;
-    transactionFeeRate = blockchainSettings.transactionFeeRate;
+
+    feeSimulator.reset();
+    feeContract = FeeContract(nullptr);
+
     _maxHeightPub = BlockHeight(0);
     _oldBlocks.reserve(_oldBlocks.size() + _blocks.size());
     for (auto &block : _blocks) {
@@ -75,10 +83,11 @@ void Blockchain::publishBlock(std::unique_ptr<Block> block) {
     } else {
         std::vector<Block *> &smallestVector = _smallestBlocks[height];
         
-        if (block->value < smallestVector.front()->value) {
+        // TODO test how value / timeMined changes bahavior
+        if (block->timeMined < smallestVector.front()->timeMined) {
             smallestVector.clear();
             smallestVector.push_back(block.get());
-        } else if (block->value == smallestVector.front()->value) {
+        } else if (block->timeMined == smallestVector.front()->timeMined) {
             smallestVector.push_back(block.get());
         }
     }
@@ -137,12 +146,12 @@ const Block &Blockchain::winningHead() const {
 
 void Blockchain::advanceToTime(BlockTime time) {
     assert(time >= timeInSecs);
-    valueNetworkTotal += transactionFeeRate * (time - timeInSecs);
+    valueNetworkTotal += feeSimulator.addValueToChain(timeInSecs, time, getMaxHeightPub());
     timeInSecs = time;
 }
 
-BlockValue Blockchain::expectedBlockSize() const {
-    return transactionFeeRate * secondsPerBlock + BlockValue(_smallestBlocks[rawHeight(getMaxHeightPub())].front()->nextBlockReward());
+BlockValue Blockchain::expectedBlockSize() {
+    return BlockValue(feeSimulator.getValue(timeInSecs, timeInSecs + secondsPerBlock, getMaxHeightPub()) + BlockValue(_smallestBlocks[rawHeight(getMaxHeightPub())].front()->nextBlockReward()));
 }
 
 TimeRate Blockchain::chanceToWin(HashRate hashRate) const {

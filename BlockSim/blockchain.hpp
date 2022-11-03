@@ -10,6 +10,8 @@
 #define blockchain_hpp
 
 #include "typeDefs.hpp"
+#include "FeeContract.hpp"
+#include "FeeSimulator.hpp"
 
 #include <queue>
 #include <stddef.h>
@@ -24,13 +26,13 @@ class Blockchain {
     Value valueNetworkTotal;
     BlockTime timeInSecs;
     BlockRate secondsPerBlock;
-    ValueRate transactionFeeRate;
-    
+    FeeSimulator feeSimulator;
+    FeeContract feeContract;
     
     BlockHeight _maxHeightPub;
-    std::vector<std::vector<size_t>> _blocksIndex;
+    std::vector<std::vector<size_t>> _blocksIndex;      // holds indexes to all blocks at their respective height
     std::vector<std::vector<Block *>> _smallestBlocks; // cache smallest blocks of a given height
-    std::vector<std::unique_ptr<Block>> _blocks;
+    std::vector<std::unique_ptr<Block>> _blocks;        // holds all blocks created
     
     std::vector<std::unique_ptr<Block>> _oldBlocks;
     
@@ -70,7 +72,7 @@ public:
         return valueNetworkTotal;
     }
     
-    BlockValue expectedBlockSize() const;
+    BlockValue expectedBlockSize();
     TimeRate chanceToWin(HashRate hashRate) const;
     
     Value gap(BlockHeight i) const;
