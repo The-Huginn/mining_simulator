@@ -92,7 +92,7 @@ Value functionForkPercentage(const Blockchain &, Value maxVal, double funcCoeff)
     return Value(static_cast<ValueType>(newValue));
 }
 
-Value functionForkLambert(const Blockchain &blockchain, Value maxVal, double lambertCoeff) {
+Value functionForkLambert(Blockchain &blockchain, Value maxVal, double lambertCoeff) {
     //don't include B-- this is about the expected portion form tx fees
     auto expectedBlockSize = blockchain.expectedBlockSize();
     auto expectedSizeRaw = rawValue(expectedBlockSize);

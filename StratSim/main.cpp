@@ -32,7 +32,7 @@
 #define NOISE_IN_TRANSACTIONS false //miners don't put the max value they can into a block (simulate tx latency)
 
 #define NETWORK_DELAY BlockTime(0)         //network delay in seconds for network to hear about your block
-#define EXPECTED_NUMBER_OF_BLOCKS BlockCount(10000)
+#define EXPECTED_NUMBER_OF_BLOCKS BlockCount(100)
 
 #define LAMBERT_COEFF 0.13533528323661//coeff for lambert func equil  must be in [0,.2]
 //0.13533528323661 = 1/(e^2)
@@ -130,13 +130,13 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
     }
     learningModel->writeWeights(settings.numberOfGames);
     
-    delete learningModel;
-//    std::cout << 100 * double(rawCount(blocksInLongestChain)) / double(rawCount(totalBlocksMined)) << "% in final chain" << std::endl;
-    
     GAMEINFOBLOCK(
                   GAMEINFO("Games over. Final strategy weights:\n");
                   learningModel->printWeights();
                   )
+    
+    delete learningModel;
+//    std::cout << 100 * double(rawCount(blocksInLongestChain)) / double(rawCount(totalBlocksMined)) << "% in final chain" << std::endl;
 }
 
 void runSingleStratGame(RunSettings settings) {
@@ -164,15 +164,16 @@ void runSingleStratGame(RunSettings settings) {
 
 int main(int, const char * []) {
     
-    BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, A, B, EXPECTED_NUMBER_OF_BLOCKS};
+    BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, A, EXPECTED_NUMBER_OF_BLOCKS};
     GameSettings gameSettings = {blockchainSettings};
+    
 //    
 //    for (MinerCount i(0); i < MinerCount(71); i += MinerCount(6)) {
 //        RunSettings runSettings = {300000, MinerCount(100), i, gameSettings, "mult"};
 //        runSingleStratGame(runSettings);
 //    }
     
-    RunSettings runSettings = {1000, MinerCount(200), MinerCount(0), gameSettings, "test"};
+    RunSettings runSettings = {1, MinerCount(200), MinerCount(0), gameSettings, "test"};
     runSingleStratGame(runSettings);
     
 }

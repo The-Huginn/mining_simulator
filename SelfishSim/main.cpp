@@ -91,7 +91,7 @@ int main(int, const char * []) {
         GAMEINFO("\n\nGame#: " << gameNum << " The board is set, the pieces are in motion..." << std::endl);
         GAMEINFO("miner ratio:" << selfishPower << " selfish." << std::endl);
         
-        BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, A, B, EXPECTED_NUMBER_OF_BLOCKS};
+        BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, A, EXPECTED_NUMBER_OF_BLOCKS};
         GameSettings settings = {blockchainSettings};
         
         

@@ -25,6 +25,6 @@ std::unique_ptr<Strategy> createFunctionForkStrategy(bool atomic, ForkFunc f, st
 Value functionForkValueInMinedChild(const Blockchain &blockchain, const Block &block, ForkFunc f);
 
 Value functionForkPercentage(const Blockchain &blockchain, Value maxVal, double funcCoeff);
-Value functionForkLambert(const Blockchain &blockchain, Value maxVal, double lambertCoeff);
+Value functionForkLambert(Blockchain &blockchain, Value maxVal, double lambertCoeff);
 
 #endif /* function_fork_miner_hpp */
