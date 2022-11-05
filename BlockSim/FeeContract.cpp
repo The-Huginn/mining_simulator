@@ -15,6 +15,8 @@
 #include "json.hpp"
 #include "logging.h"
 
+Value FeeContract::toContracts = 0;
+
 FeeContract::Contract::Contract(const Value initial_value, const HeightType length_red_, int max_ = 10000) : value_con(initial_value), length_red(length_red_), avg(initial_value / length_red_), max(max_ + 100) {}
 
 std::pair<Value, std::unique_ptr<FeeContract::Contract>> FeeContract::Contract::claimAndCollect(const Value collected) {
@@ -31,6 +33,10 @@ Value FeeContract::Contract::nextClaim() {
     return std::min(Value(value_con / length_red), max / 100 * avg);
 }
 
+Value FeeContract::Contract::totalValue() {
+    return value_con;
+}
+
 FeeContract::FeeContract() {};
 
 FeeContract::FeeContract(const char filepath[]) {
@@ -42,10 +48,15 @@ FeeContract::FeeContract(const char filepath[]) {
     f.close();
 
     m_assert(data.contains("contracts") &&
-            data.contains("value"),
+            data.contains("value") &&
+            data.contains("toContracts"),
             "Missing json parameters");
 
     Value initial_total_value = data.at("value").get<Value>();
+    toContracts = data.at("toContracts").get<Value>();
+    m_assert(toContracts <= 100 &&
+            toContracts >= 0,
+            "Variable toContracts expects value in range [0,100]");
     data = data.at("contracts");
 
     ContractCount total(0);
@@ -84,4 +95,18 @@ Value FeeContract::nextClaim() {
         claim += pair.second->nextClaim();
     }
     return claim;
+}
+
+Value FeeContract::totalValue() {
+    Value total(0);
+
+    for (const auto& pair : contracts) {
+        total += pair.second->totalValue();
+    }
+
+    return total;
+}
+
+std::pair<Value, Value> FeeContract::getFeeRate(Value fees) {
+    return std::make_pair(fees * (100 - toContracts) / 100, fees * toContracts / 100);
 }

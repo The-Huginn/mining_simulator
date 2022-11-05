@@ -39,7 +39,10 @@ class FeeContract {
                 std::pair<Value, std::unique_ptr<Contract>> claimAndCollect(Value collected);
 
                 Value nextClaim();
+                Value totalValue();
         };
+
+        static Value toContracts;
 
     protected:
         std::vector<std::pair<ContractCount, std::unique_ptr<Contract>>> contracts;
@@ -54,6 +57,11 @@ class FeeContract {
         std::pair<Value, std::unique_ptr<FeeContract>> claimAndCollect(Value collected);
 
         Value nextClaim();
+        Value totalValue();
+
+        // pair.first is kept as tx fees by the miner
+        // pair.second is sent to the contract(s)
+        static std::pair<Value, Value> getFeeRate(Value fees);
 };
 
 #endif /* FEE_CONTRACT */

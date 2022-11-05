@@ -1,5 +1,6 @@
 {
     "value": 100000000,
+    "toContracts": 70,
     "contracts": [
         {
             "percentage": 10,
