@@ -28,9 +28,6 @@ Blockchain::Blockchain(BlockchainSettings blockchainSettings) :
     feeSimulator(FeeSimulator(blockchainSettings.secondsPerBlock)),
     _maxHeightPub(0)
 {
-    _feeContracts.reserve(rawCount(blockchainSettings.numberOfBlocks) * 2);
-    _feeContracts[0].push_back(std::make_unique<FeeContract>(nullptr));
-
     _blocks.reserve(rawCount(blockchainSettings.numberOfBlocks) * 2);
     _blocksIndex.resize(rawCount(blockchainSettings.numberOfBlocks) * 2);
     _smallestBlocks.resize(rawCount(blockchainSettings.numberOfBlocks) * 2);
@@ -40,14 +37,14 @@ Blockchain::Blockchain(BlockchainSettings blockchainSettings) :
 std::unique_ptr<Block> Blockchain::createBlock(const Block *parent, const Miner *miner, Value value) {
     Value txFees = value - parent->nextBlockReward();
 
-    if (_oldBlocks.size() == 0) {
-        return std::make_unique<Block>(parent, miner, getTime(), txFees);
-    }
+    return std::make_unique<Block>(parent, miner, getTime(), txFees);
+    // if (_oldBlocks.size() == 0) {
+    // }
     
-    auto block = std::move(_oldBlocks.back());
-    _oldBlocks.pop_back();
-    block->reset(parent, miner, getTime(), txFees);
-    return block;
+    // auto block = std::move(_oldBlocks.back());
+    // _oldBlocks.pop_back();
+    // block->reset(parent, miner, getTime(), txFees);
+    // return block;
 }
 
 void Blockchain::reset(BlockchainSettings blockchainSettings) {
@@ -56,19 +53,16 @@ void Blockchain::reset(BlockchainSettings blockchainSettings) {
     secondsPerBlock = blockchainSettings.secondsPerBlock;
 
     feeSimulator.reset();
-    for (auto& contract : _feeContracts)
-        contract.clear();
-    _feeContracts.clear();
 
     _maxHeightPub = BlockHeight(0);
-    _oldBlocks.reserve(_oldBlocks.size() + _blocks.size());
-    for (auto &block : _blocks) {
-        _oldBlocks.push_back(std::move(block));
-    }
+    // _oldBlocks.reserve(_oldBlocks.size() + _blocks.size());
+    // for (auto &block : _blocks) {
+    //     _oldBlocks.push_back(std::move(block));
+    // }
     _blocks.clear();
     _smallestBlocks[0].clear();
     _blocksIndex[0].clear();
-    auto genesis = std::make_unique<Block>(blockchainSettings.blockReward);
+    auto genesis = std::make_unique<Block>(blockchainSettings.blockReward, std::make_unique<FeeContract>(nullptr));
     _smallestBlocks[0].push_back(genesis.get());
     _blocksIndex[0].push_back(_blocks.size());
     _blocks.push_back(std::move(genesis));
