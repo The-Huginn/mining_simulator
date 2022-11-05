@@ -10,9 +10,11 @@
 #define block_hpp
 
 #include "typeDefs.hpp"
+#include "FeeContract.hpp"
 
 #include <vector>
 #include <iterator>
+#include <memory>
 
 class Miner;
 
@@ -28,10 +30,11 @@ public:
     Value txFeesInChain;
     Value valueInChain;
     Value blockReward;
+    std::unique_ptr<FeeContract> feeContract;
     
-    Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds, Value txFees, BlockHeight height, Value txFeesInChain, Value valueInChain, Value blockReward);
+    Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds, Value txFees, BlockHeight height, Value txFeesInChain, Value blockReward);
     
-    Block(BlockValue blockReward);
+    Block(BlockValue blockReward, std::unique_ptr<FeeContract> _feeContract);
     Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees);
     
     void reset(const Block *parent, const Miner *miner, BlockTime timeSeconds, Value txFees);

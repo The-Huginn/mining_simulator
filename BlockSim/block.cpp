@@ -15,12 +15,22 @@
 
 constexpr auto timeMax = std::numeric_limits<TimeType>::max();
 
-Block::Block(BlockValue blockReward_) : Block(nullptr, nullptr, BlockTime(0), Value(0), BlockHeight(0), Value(0), Value(0), Value(rawValue(blockReward_))) {}
+Block::Block(BlockValue blockReward_, std::unique_ptr<FeeContract> _feeContract) : Block(nullptr, nullptr, BlockTime(0), Value(0), BlockHeight(0), Value(0), Value(rawValue(blockReward_))) {
+    feeContract = std::move(_feeContract);
+    valueInChain = feeContract->totalValue();
+}
 
-Block::Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees, BlockHeight height_, Value txFeesInChain_, Value valueInChain_, Value blockReward_) : timeBroadcast(timeMax), parent(parent_), miner(miner_), height(height_), timeMined(timeSeconds_), value(txFees + blockReward_), txFeesInChain(txFeesInChain_), valueInChain(valueInChain_), blockReward(blockReward_) {}
+Block::Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees, BlockHeight height_, Value txFeesInChain_, Value blockReward_) : timeBroadcast(timeMax), parent(parent_), miner(miner_), height(height_), timeMined(timeSeconds_), value(txFees + blockReward_), txFeesInChain(txFeesInChain_), blockReward(blockReward_) {
+    if (parent != nullptr) {
+        std::pair<Value, std::unique_ptr<FeeContract>> next = parent->feeContract->claimAndCollect(txFees);
+        value = next.first + blockReward; //TODO add tx fee to keep from miner
+        feeContract = std::move(next.second);
+        valueInChain = parent->valueInChain + value;
+    }
+}
 
 Block::Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees) :
-    Block(parent_, miner_, timeSeconds_, txFees, parent_->height + BlockHeight(1), parent_->txFeesInChain + txFees, parent_->valueInChain + parent_->blockReward + txFees, parent_->nextBlockReward()) {}
+    Block(parent_, miner_, timeSeconds_, txFees, parent_->height + BlockHeight(1), parent_->txFeesInChain + txFees, parent_->nextBlockReward()) {}
 
 void Block::reset(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees) {
     height = parent_->height + BlockHeight(1);
