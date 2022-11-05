@@ -164,7 +164,7 @@ void runSingleStratGame(RunSettings settings) {
 
 int main(int, const char * []) {
     
-    BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, A, EXPECTED_NUMBER_OF_BLOCKS};
+    BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, B, EXPECTED_NUMBER_OF_BLOCKS};
     GameSettings gameSettings = {blockchainSettings};
     
 //    

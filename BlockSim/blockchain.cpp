@@ -83,11 +83,10 @@ void Blockchain::publishBlock(std::unique_ptr<Block> block) {
     } else {
         std::vector<Block *> &smallestVector = _smallestBlocks[height];
         
-        // TODO test how value / timeMined changes bahavior
-        if (block->timeMined < smallestVector.front()->timeMined) {
+        if (block->value < smallestVector.front()->value) {
             smallestVector.clear();
             smallestVector.push_back(block.get());
-        } else if (block->timeMined == smallestVector.front()->timeMined) {
+        } else if (block->value == smallestVector.front()->value) {
             smallestVector.push_back(block.get());
         }
     }
