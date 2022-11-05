@@ -27,9 +27,9 @@ class Blockchain {
     BlockTime timeInSecs;
     BlockRate secondsPerBlock;
     FeeSimulator feeSimulator;
-    FeeContract feeContract;
     
     BlockHeight _maxHeightPub;
+    std::vector<std::vector<std::unique_ptr<FeeContract>>> _feeContracts;
     std::vector<std::vector<size_t>> _blocksIndex;      // holds indexes to all blocks at their respective height
     std::vector<std::vector<Block *>> _smallestBlocks; // cache smallest blocks of a given height
     std::vector<std::unique_ptr<Block>> _blocks;        // holds all blocks created

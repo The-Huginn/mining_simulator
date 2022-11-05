@@ -13,6 +13,7 @@
 #include "utils.hpp"
 #include "block.hpp"
 #include "blockchain_settings.hpp"
+#include "logging.h"
 
 #include <cassert>
 #include <unordered_set>
@@ -25,9 +26,11 @@ Blockchain::Blockchain(BlockchainSettings blockchainSettings) :
     timeInSecs(0),
     secondsPerBlock(blockchainSettings.secondsPerBlock),
     feeSimulator(FeeSimulator(blockchainSettings.secondsPerBlock)),
-    feeContract(FeeContract(nullptr)),
     _maxHeightPub(0)
 {
+    _feeContracts.reserve(rawCount(blockchainSettings.numberOfBlocks) * 2);
+    _feeContracts[0].push_back(std::make_unique<FeeContract>(nullptr));
+
     _blocks.reserve(rawCount(blockchainSettings.numberOfBlocks) * 2);
     _blocksIndex.resize(rawCount(blockchainSettings.numberOfBlocks) * 2);
     _smallestBlocks.resize(rawCount(blockchainSettings.numberOfBlocks) * 2);
@@ -53,7 +56,9 @@ void Blockchain::reset(BlockchainSettings blockchainSettings) {
     secondsPerBlock = blockchainSettings.secondsPerBlock;
 
     feeSimulator.reset();
-    feeContract = FeeContract(nullptr);
+    for (auto& contract : _feeContracts)
+        contract.clear();
+    _feeContracts.clear();
 
     _maxHeightPub = BlockHeight(0);
     _oldBlocks.reserve(_oldBlocks.size() + _blocks.size());
@@ -208,6 +213,7 @@ const std::vector<const Block *> Blockchain::getHeads() const {
 }
 
 void Blockchain::printBlockchain() const {
+    COMMENTARY("Total value in chain: " << valueNetworkTotal << std::endl);
     std::unordered_set<const Block *> printedBlocks;
     for (auto &current : getHeads()) {
         auto chain = current->getChain();
