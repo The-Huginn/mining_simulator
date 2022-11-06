@@ -21,11 +21,10 @@ FeeContract::Contract::Contract(const Value initial_value, const HeightType leng
 
 std::pair<Value, std::unique_ptr<FeeContract::Contract>> FeeContract::Contract::claimAndCollect(const Value collected) {
     Value claim(nextClaim());
-    avg = avg * (length_red - 1) / length_red + claim;
     
-    value_con += collected;
-
-    std::pair<Value, std::unique_ptr<FeeContract::Contract>> pair(claim, std::make_unique<Contract>(value_con, length_red));
+    std::pair<Value, std::unique_ptr<FeeContract::Contract>> pair(claim, std::make_unique<Contract>(value_con - claim + collected, length_red, max));
+    pair.second->avg = avg * (length_red - 1) / length_red + claim;
+    
     return pair;
 }
 
