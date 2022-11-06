@@ -67,7 +67,7 @@ FeeContract::FeeContract(const char filepath[]) {
 
         ContractCount percentage = it.at("percentage").get<ContractCount>();
         HeightType length = it.at("length").get<HeightType>();
-        Value initial_value = (initial_total_value / 100) / percentage; //  switching order for better manipulation in satoshis: initial / (first / 100) is the same
+        Value initial_value = initial_total_value * percentage / 100;
         contracts.push_back(std::make_pair(percentage, std::make_unique<Contract>(initial_value, length)));
         total += percentage;
     }
@@ -80,7 +80,7 @@ std::pair<Value, std::unique_ptr<FeeContract>> FeeContract::claimAndCollect(Valu
     Value claim(0);
     auto next_contract = std::make_unique<FeeContract>();
     for (const auto& pair : contracts) {
-        Value value((collected / 100) / pair.first);
+        Value value(collected * pair.first / 100);
         auto reply = pair.second->claimAndCollect(value);
         claim += reply.first;
         next_contract->contracts.push_back(std::make_pair(pair.first, std::move(reply.second)));
