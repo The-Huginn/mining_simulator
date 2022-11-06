@@ -129,10 +129,11 @@ Value FeeSimulator::getValue(BlockTime from, BlockTime until, BlockHeight height
         do {
             TimeType start = std::max(from, secondsPerBlock * current);
             TimeType end = std::min(until, secondsPerBlock * (current + 1));
-            reward += snapshots[current] * secondsPerBlock / (end - start);
+            reward += snapshots[current] * (end - start) / secondsPerBlock;
             current++;
         } while (current <= rawTime(until) / rawBlockRate(secondsPerBlock));
     }
+    COMMENTARY("New tx fees added to chain: " << reward << std::endl);
 
     return reward;
 }
