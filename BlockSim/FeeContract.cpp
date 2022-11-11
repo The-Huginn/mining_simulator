@@ -47,11 +47,9 @@ FeeContract::FeeContract(const char filepath[]) {
     f.close();
 
     m_assert(data.contains("contracts") &&
-            data.contains("value") &&
             data.contains("toContracts"),
             "Missing json parameters");
 
-    Value initial_total_value = data.at("value").get<Value>();
     toContracts = data.at("toContracts").get<Value>();
     m_assert(toContracts <= 100 &&
             toContracts >= 0,
@@ -61,13 +59,14 @@ FeeContract::FeeContract(const char filepath[]) {
     ContractCount total(0);
     for (auto& it : data) {
         m_assert(it.contains("percentage") &&
-                it.contains("length"),
+                it.contains("length") &&
+                it.contains("value"),
                 "Missing parameters for contract");
 
         ContractCount percentage = it.at("percentage").get<ContractCount>();
         HeightType length = it.at("length").get<HeightType>();
-        Value initial_value = initial_total_value * percentage / 100;
-        contracts.push_back(std::make_pair(percentage, std::make_unique<Contract>(initial_value, length)));
+        Value value = it.at("value").get<ValueType>();
+        contracts.push_back(std::make_pair(percentage, std::make_unique<Contract>(value, length)));
         total += percentage;
     }
 
