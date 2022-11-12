@@ -116,7 +116,7 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
         auto result = runGame(minerGroup, *blockchain, settings.gameSettings);
         learningModel->writeContract(gameNum, blockchain->winningHead());
 
-        GAMEINFO(std::cerr << "Value in longest: " << result.moneyInLongestChain << " (" << gameNum + 1 << "/" << settings.numberOfGames << ")" << std::endl);
+        GAMEINFO("Value in longest: " << result.moneyInLongestChain << " (" << gameNum + 1 << "/" << settings.numberOfGames << ")" << std::endl);
         GAMEINFO("The game is complete. Calculate the scores:" << std::endl);
         
         Value maxProfit = (A * (EXPECTED_NUMBER_OF_BLOCKS * settings.gameSettings.blockchainSettings.secondsPerBlock) - result.moneyLeftAtEnd) / Value(rawCount(settings.totalMiners) / 4);
@@ -136,8 +136,8 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
     learningModel->writeWeights(settings.numberOfGames);
     
     GAMEINFOBLOCK(
-                  GAMEINFO(std::cerr << "Total blocks mined: " << totalBlocksMined << std::endl);
-                  GAMEINFO(std::cerr << "Longest chain: " << blocksInLongestChain << std::endl);
+                  GAMEINFO("Total blocks mined: " << totalBlocksMined << std::endl);
+                  GAMEINFO("Longest chain: " << blocksInLongestChain << std::endl);
                   GAMEINFO("Games over. Final strategy weights:\n");
                   learningModel->printWeights();
                   )

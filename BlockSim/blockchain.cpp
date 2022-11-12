@@ -37,7 +37,7 @@ Blockchain::Blockchain(BlockchainSettings blockchainSettings) :
 std::unique_ptr<Block> Blockchain::createBlock(const Block *parent, const Miner *miner, Value value) {
     Value txFees = value - parent->nextBlockReward() - parent->nextContractReward();
     auto block = std::make_unique<Block>(parent, miner, getTime(), txFees);
-    COMMENTARY("\n\nparent mine time: " << parent->timeMined << " current time: " << getTime() << " height: " << parent->height + HeightType(1) << "\ntxFee to miner: " << txFees << " value added by feeSim: " << feeSimulator.getValue(parent->timeMined, getTime(), parent->height + HeightType(1)) << "\nContract reward: " << toContract << " total block value: " << block->value << "\ntxFeesInChain parent: " << parent->txFeesInChain << " FeesInChain now: " << block->txFeesInChain << std::endl << std::endl);
+    COMMENTARY("\n\nparent mine time: " << parent->timeMined << " current time: " << getTime() << " height: " << parent->height + HeightType(1) << "\ntxFee to miner: " << txFees << " value added by feeSim: " << feeSimulator.getValue(parent->timeMined, getTime(), parent->height + HeightType(1)) << "\nContract reward: " << FeeContract::backToContract(txFees) << " total block value: " << block->value << "\ntxFeesInChain parent: " << parent->txFeesInChain << " FeesInChain now: " << block->txFeesInChain << std::endl << std::endl);
     return block;
 }
 
