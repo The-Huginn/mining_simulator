@@ -1,22 +1,25 @@
 {
-    "value": 100000000,
-    "toContracts": 70,
-    "contracts": [
-        {
-            "percentage": 10,
-            "length": 2016
-        },
-        {
-            "percentage": 20,
-            "length": 4032
-        },
-        {
-            "percentage": 30,
-            "length": 6048
-        },
-        {
-            "percentage": 40,
-            "length": 8064
-        }
-    ]
+  "contracts": [
+    {
+      "percentage": 10,
+      "length": 2016,
+      "value": 705600000000
+    },
+    {
+      "percentage": 20,
+      "length": 4032,
+      "value": 2822400000000
+    },
+    {
+      "percentage": 30,
+      "length": 6048,
+      "value": 6350400000000
+    },
+    {
+      "percentage": 40,
+      "length": 8064,
+      "value": 11289600000000
+    }
+  ],
+  "toContracts": 70
 }

@@ -1,36 +1,15 @@
 {
-	"length": 3200,
-	"mean": 100000000,
-	"deviation": 10000000,
-	"fullMempool": true,
-	"timeline": [
-		{
-			"start": 0,
-			"epochType": 0,
-			"values": [
-			100000000
-			]
-		},
-		{
-			"start": 1000,
-			"epochType": 2,
-			"values": []
-		},
-		{
-			"start": 2000,
-			"epochType": 2,
-			"values" : [
-			200000000,
-			20000000
-			]
-		},
-		{
-			"start": 3000,
-			"epochType": 1,
-			"values": [
-			100000000,
-			200000000
-			]
-		}
-	]
+  "length": 100000,
+  "mean": 100000000,
+  "deviation": 100000,
+  "fullMempool": false,
+  "timeline": [
+    {
+      "start": 0,
+      "epochType": 0,
+      "values": [
+        5000000000
+      ]
+    }
+  ]
 }
