@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 5/25/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 11/6/22.
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 #include "function_fork_miner.hpp"
 #include "block.hpp"
@@ -79,11 +82,11 @@ Value functionForkValueInMinedChild(const Blockchain &chain, const Block &block,
 }
 
 Value valCont(const Blockchain &chain, ForkFunc f, const Block &contBlock) {
-    return f(chain, chain.rem(contBlock)) + contBlock.nextBlockReward();
+    return f(chain, chain.rem(contBlock)) + contBlock.nextBlockReward() + contBlock.nextContractReward();
 }
 
 Value valUnder(const Blockchain &chain, ForkFunc f, const Block &underBlock) {
-    return std::min(f(chain, chain.rem(underBlock)), chain.gap(chain.getMaxHeightPub()) - UNDERCUT_VALUE) + underBlock.nextBlockReward();
+    return std::min(f(chain, chain.rem(underBlock)), chain.gap(chain.getMaxHeightPub()) - UNDERCUT_VALUE) + underBlock.nextBlockReward() + underBlock.nextContractReward();
 }
 
 Value functionForkPercentage(const Blockchain &, Value maxVal, double funcCoeff) {

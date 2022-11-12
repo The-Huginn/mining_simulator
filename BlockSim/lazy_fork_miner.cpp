@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 5/25/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 11/6/22.
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 #include "lazy_fork_miner.hpp"
 
@@ -63,7 +66,7 @@ Block &lazyBlockToMineOnNonAtomic(const Miner &, const Blockchain &chain) {
 }
 
 Value lazyValueInMinedChild(const Blockchain &chain, const Block &mineHere) {
-    return chain.rem(mineHere) / Value(2.0) + mineHere.nextBlockReward();
+    return chain.rem(mineHere) / Value(2.0) + mineHere.nextBlockReward() + mineHere.nextContractReward();
 }
 
 
