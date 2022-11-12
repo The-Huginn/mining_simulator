@@ -108,3 +108,10 @@ Value FeeContract::totalValue() {
 std::pair<Value, Value> FeeContract::getFeeRate(Value fees) {
     return std::make_pair(fees * (100 - toContracts) / 100, fees * toContracts / 100);
 }
+
+Value FeeContract::backToContract(Value fees) {
+    m_assert(fees != 0 ||
+            toContracts != 100,
+            "Unable to calculate backToContract");
+    return (toContracts / (100.0 - toContracts)) * fees;
+}

@@ -62,6 +62,8 @@ class FeeContract {
         // pair.first is kept as tx fees by the miner
         // pair.second is sent to the contract(s)
         static std::pair<Value, Value> getFeeRate(Value fees);
+
+        static Value backToContract(Value fees);
 };
 
 #endif /* FEE_CONTRACT */
