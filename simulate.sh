@@ -1,6 +1,10 @@
 # !/bin/bash
 
+# When using generated feeContract
 length=2016
+to_contracts=50
+
+# When using generated feeSimulation
 mempool=false
 
 games=100
@@ -37,7 +41,7 @@ print_help() {
     echo -e "-p     Script will run simulations with different '.percentage' parameter in feeContract.json\n"
     echo -e "-r     Script will run single simulation.\n"
     echo -e "-g     Requires one parameter. Sets how many games will be run for each execution of the simulator.\n"
-    echo -e "-v     Script will not redirect output of program and will display it in the console.\n"
+    echo -e "-v     Script will not redirect output of program and will display it in the console.\n ${Green}Please note you will need to call 'make clean' before calling this script after changing logging.h for changes to apply.\n ${Color_Off}"
 }
 
 
@@ -78,7 +82,7 @@ do
             echo -e "Each simulation will be run with ${games} games.\n"
             ;;
         v)
-            echo -e "Will be priting outpus of program.\n"
+            echo -e "Will be priting outputs of program.\n"
             PRINT_OUTPUT=true
             ;;
 
@@ -104,7 +108,7 @@ outputDir=$([ $1 ] && echo $1 || echo "simulation")
 
 [ ! -f $simulator ] && jq -n "{\"length\": 100000,\"mean\": 100000000,\"deviation\": 100000,\"fullMempool\": $mempool,\"timeline\": [{\"start\": 0,\"epochType\": 0,\"values\": [5000000000]}]}" > $simulator
 
-[ ! -f $contracts ] && jq -n "{\"value\":0,\"toContracts\":0,\"contracts\":[{\"percentage\":100,\"length\":${length}}]}" > $contracts
+[ ! -f $contracts ] && jq -n "{\"toContracts\":$to_contracts,\"contracts\":[{\"percentage\":100,\"length\":${length}}]}" > $contracts
 
 tmp=$(mktemp /tmp/tmp.XXXXXXX)
 
@@ -123,6 +127,7 @@ set_fee_values() {
 }
 
 run_simulation() {
+    rm -rf $indexDir/*
     if [ $PRINT_OUTPUT ]
     then
         ./strat $games
@@ -144,10 +149,12 @@ then
         
         run_simulation
 
-        mkdir -p $outputDir/$i
-        cp contracts/game-0.txt $outputDir/$i/toContract-beforeEvolution.txt
-        cp contracts/game-$(($games - 1)).txt $outputDir/$i/toContract-afterEvolution.txt
-        cp $indexDir/* $outputDir/$i
+        mkdir -p $outputDir/percentage/$i
+        rm -rf $outputDir/percentage/$i/*
+
+        cp contracts/game-0.txt $outputDir/percentage/$i/toContract-beforeEvolution.txt
+        cp contracts/game-$(($games - 1)).txt $outputDir/percentage/$i/toContract-afterEvolution.txt
+        cp $indexDir/* $outputDir/percentage/$i
     done
 fi
 
@@ -159,7 +166,10 @@ then
     run_simulation
 
     mkdir -p $outputDir/single
-    cp contracts/game-0.txt $outputDir/single/toContract.txt
+    rm -rf $outputDir/single/*
+
+    cp contracts/game-0.txt $outputDir/single/toContract-beforeEvolution.txt
+    cp contracts/game-$(($games - 1)).txt $outputDir/single/toContract-afterEvolution.txt
     cp $indexDir/* $outputDir/single
 fi
 
