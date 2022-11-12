@@ -35,16 +35,10 @@ Blockchain::Blockchain(BlockchainSettings blockchainSettings) :
 }
 
 std::unique_ptr<Block> Blockchain::createBlock(const Block *parent, const Miner *miner, Value value) {
-    Value txFees = value - parent->nextBlockReward();
-
-    return std::make_unique<Block>(parent, miner, getTime(), txFees);
-    // if (_oldBlocks.size() == 0) {
-    // }
-    
-    // auto block = std::move(_oldBlocks.back());
-    // _oldBlocks.pop_back();
-    // block->reset(parent, miner, getTime(), txFees);
-    // return block;
+    Value txFees = value - parent->nextBlockReward() - parent->nextContractReward();
+    auto block = std::make_unique<Block>(parent, miner, getTime(), txFees);
+    COMMENTARY("\n\nparent mine time: " << parent->timeMined << " current time: " << getTime() << " height: " << parent->height + HeightType(1) << "\ntxFee to miner: " << txFees << " value added by feeSim: " << feeSimulator.getValue(parent->timeMined, getTime(), parent->height + HeightType(1)) << "\nContract reward: " << toContract << " total block value: " << block->value << "\ntxFeesInChain parent: " << parent->txFeesInChain << " FeesInChain now: " << block->txFeesInChain << std::endl << std::endl);
+    return block;
 }
 
 void Blockchain::reset(BlockchainSettings blockchainSettings) {
@@ -55,14 +49,10 @@ void Blockchain::reset(BlockchainSettings blockchainSettings) {
     feeSimulator.reset();
 
     _maxHeightPub = BlockHeight(0);
-    // _oldBlocks.reserve(_oldBlocks.size() + _blocks.size());
-    // for (auto &block : _blocks) {
-    //     _oldBlocks.push_back(std::move(block));
-    // }
     _blocks.clear();
     _smallestBlocks[0].clear();
     _blocksIndex[0].clear();
-    auto genesis = std::make_unique<Block>(blockchainSettings.blockReward, std::make_unique<FeeContract>(nullptr));
+    auto genesis = std::make_unique<Block>(blockchainSettings.blockReward);
     _smallestBlocks[0].push_back(genesis.get());
     _blocksIndex[0].push_back(_blocks.size());
     _blocks.push_back(std::move(genesis));
@@ -144,12 +134,14 @@ const Block &Blockchain::winningHead() const {
 
 void Blockchain::advanceToTime(BlockTime time) {
     assert(time >= timeInSecs);
-    valueNetworkTotal += feeSimulator.addValueToChain(timeInSecs, time, getMaxHeightPub());
+    valueNetworkTotal += FeeContract::getFeeRate(feeSimulator.addValueToChain(timeInSecs, time, getMaxHeightPub())).first;
     timeInSecs = time;
 }
 
 BlockValue Blockchain::expectedBlockSize() {
-    return BlockValue(feeSimulator.getValue(timeInSecs, timeInSecs + secondsPerBlock, getMaxHeightPub()) + BlockValue(_smallestBlocks[rawHeight(getMaxHeightPub())].front()->nextBlockReward()));
+    return BlockValue(feeSimulator.getValue(timeInSecs, timeInSecs + secondsPerBlock, getMaxHeightPub()) +
+            BlockValue(_smallestBlocks[rawHeight(getMaxHeightPub())].front()->nextBlockReward()) +
+            BlockValue(_smallestBlocks[rawHeight(getMaxHeightPub())].front()->nextContractReward()));
 }
 
 TimeRate Blockchain::chanceToWin(HashRate hashRate) const {
@@ -207,7 +199,7 @@ const std::vector<const Block *> Blockchain::getHeads() const {
 }
 
 void Blockchain::printBlockchain() const {
-    COMMENTARY("Total value in chain: " << valueNetworkTotal << std::endl);
+    COMMENTARY("Total tx fees value in chain (without block reward and fee contracts): " << valueNetworkTotal << std::endl);
     std::unordered_set<const Block *> printedBlocks;
     for (auto &current : getHeads()) {
         auto chain = current->getChain();
