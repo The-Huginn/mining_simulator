@@ -15,8 +15,8 @@
 
 
 #define _ERROROUTPUT 1
-#define _GAMEINFO 1
-#define _COMMENTARY 1
+// #define _GAMEINFO 1
+// #define _COMMENTARY 1
 
 #ifdef _GAMEINFO
 #define GAMEINFO(arg) std::cout << arg
@@ -37,7 +37,7 @@
 #endif
 
 #ifdef _ERROROUTPUT
-#define ERROR(arg) std::cout << arg
+#define ERROR(arg) std::cerr << arg
 #else
 #define ERROR(arg)
 #endif
