@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 6/6/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 10/31/22.
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 
 #include "BlockSim/block.hpp"
@@ -32,7 +35,7 @@
 #define NOISE_IN_TRANSACTIONS false //miners don't put the max value they can into a block (simulate tx latency)
 
 #define NETWORK_DELAY BlockTime(0)         //network delay in seconds for network to hear about your block
-#define EXPECTED_NUMBER_OF_BLOCKS BlockCount(100)
+#define EXPECTED_NUMBER_OF_BLOCKS BlockCount(1000)
 
 #define LAMBERT_COEFF 0.13533528323661//coeff for lambert func equil  must be in [0,.2]
 //0.13533528323661 = 1/(e^2)
@@ -85,7 +88,7 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
     }
     
 //    LearningModel *learningModel = new MultiplicativeWeightsLearningModel(learningStrategies, learningMiners.size(), resultFolder);
-    LearningModel *learningModel = new Exp3LearningModel(learningStrategies, learningMiners.size(), resultFolder);
+    LearningModel *learningModel = new Exp3LearningModel(learningStrategies, learningMiners.size(), resultFolder, "contracts");
     
     MinerGroup minerGroup(std::move(miners));
     
@@ -111,7 +114,9 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
         GAMEINFO("\n\nGame#: " << gameNum << " The board is set, the pieces are in motion..." << std::endl);
         
         auto result = runGame(minerGroup, *blockchain, settings.gameSettings);
-        
+        learningModel->writeContract(gameNum, blockchain->winningHead());
+
+        GAMEINFO(std::cerr << "Value in longest: " << result.moneyInLongestChain << " (" << gameNum + 1 << "/" << settings.numberOfGames << ")" << std::endl);
         GAMEINFO("The game is complete. Calculate the scores:" << std::endl);
         
         Value maxProfit = (A * (EXPECTED_NUMBER_OF_BLOCKS * settings.gameSettings.blockchainSettings.secondsPerBlock) - result.moneyLeftAtEnd) / Value(rawCount(settings.totalMiners) / 4);
@@ -122,15 +127,17 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
         totalBlocksMined += result.totalBlocksMined;
         blocksInLongestChain += result.blocksInLongestChain;
         
-//        BlockCount staleBlocks(result.totalBlocksMined - result.blocksInLongestChain);
-//        std::cout << result.moneyInLongestChain << " in chain and " <<
-//        result.moneyLeftAtEnd << " left with " << 100 * double(rawCount(staleBlocks)) / double(rawCount(result.totalBlocksMined)) << "% orphan rate" <<  std::endl;
+       BlockCount staleBlocks(result.totalBlocksMined - result.blocksInLongestChain);
+       std::cout << result.moneyInLongestChain << " in chain and " <<
+       result.moneyLeftAtEnd << " left with " << 100 * double(rawCount(staleBlocks)) / double(rawCount(result.totalBlocksMined)) << "% orphan rate" <<  std::endl;
         
-//        std::cout << totalBlocksMined << " total blocks mined" << std::endl;
+       std::cout << totalBlocksMined << " total blocks mined" << std::endl;
     }
     learningModel->writeWeights(settings.numberOfGames);
     
     GAMEINFOBLOCK(
+                  GAMEINFO(std::cerr << "Total blocks mined: " << totalBlocksMined << std::endl);
+                  GAMEINFO(std::cerr << "Longest chain: " << blocksInLongestChain << std::endl);
                   GAMEINFO("Games over. Final strategy weights:\n");
                   learningModel->printWeights();
                   )
@@ -162,8 +169,15 @@ void runSingleStratGame(RunSettings settings) {
     runStratGame(settings, learningStrategies, std::move(defaultStrategy));
 }
 
-int main(int, const char * []) {
+int main(int argc, const char * argv[]) {
     
+    if (argc < 2) {
+        std::cerr << "Please specify how many games you want to run using argument" << std::endl;
+        return -1;
+    }
+
+    unsigned int gameCount = std::atoi(argv[1]);
+
     BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, B, EXPECTED_NUMBER_OF_BLOCKS};
     GameSettings gameSettings = {blockchainSettings};
     
@@ -173,7 +187,7 @@ int main(int, const char * []) {
 //        runSingleStratGame(runSettings);
 //    }
     
-    RunSettings runSettings = {1, MinerCount(200), MinerCount(0), gameSettings, "test"};
+    RunSettings runSettings = {gameCount, MinerCount(200), MinerCount(0), gameSettings, "test"};
     runSingleStratGame(runSettings);
     
 }
