@@ -1,2 +1,5 @@
 *.o
+test-0/
+simulation/
+contracts/
 
