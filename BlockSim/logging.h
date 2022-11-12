@@ -12,7 +12,7 @@
 #ifndef logging_h
 #define logging_h
 
-
+#include <iostream>
 
 #define _ERROROUTPUT 1
 // #define _GAMEINFO 1
