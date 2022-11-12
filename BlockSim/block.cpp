@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 5/25/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+// Edited by Rastislav Budinsky on 
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 #include "block.hpp"
 #include "miner.hpp"
@@ -15,37 +18,32 @@
 
 constexpr auto timeMax = std::numeric_limits<TimeType>::max();
 
-Block::Block(BlockValue blockReward_, std::unique_ptr<FeeContract> _feeContract) : Block(nullptr, nullptr, BlockTime(0), Value(0), BlockHeight(0), Value(0), Value(rawValue(blockReward_))) {
-    feeContract = std::move(_feeContract);
-    valueInChain = feeContract->totalValue();
-}
+Block::Block(BlockValue blockReward_) : Block(nullptr, nullptr, BlockTime(0), Value(0), BlockHeight(0), Value(0), Value(rawValue(blockReward_))) {}
 
-Block::Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees, BlockHeight height_, Value txFeesInChain_, Value blockReward_) : timeBroadcast(timeMax), parent(parent_), miner(miner_), height(height_), timeMined(timeSeconds_), value(txFees + blockReward_), txFeesInChain(txFeesInChain_), blockReward(blockReward_) {
+Block::Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees, BlockHeight height_, Value txFeesInChain_, Value blockReward_) : timeBroadcast(timeMax), parent(parent_), miner(miner_), height(height_), timeMined(timeSeconds_), txFeesInChain(txFeesInChain_), blockReward(blockReward_) {
     if (parent != nullptr) {
-        std::pair<Value, std::unique_ptr<FeeContract>> next = parent->feeContract->claimAndCollect(txFees);
-        value = next.first + blockReward; //TODO add tx fee to keep from miner
+        Value toContracts = FeeContract::backToContract(txFees);
+        std::pair<Value, std::unique_ptr<FeeContract>> next = parent->feeContract->claimAndCollect(toContracts);
+        value = txFees + parent->nextBlockReward() + next.first;
         feeContract = std::move(next.second);
         valueInChain = parent->valueInChain + value;
+
+    } else {
+        feeContract = std::make_unique<FeeContract>(nullptr);
+        value = 0;
+        valueInChain = 0;
     }
 }
 
 Block::Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees) :
     Block(parent_, miner_, timeSeconds_, txFees, parent_->height + BlockHeight(1), parent_->txFeesInChain + txFees, parent_->nextBlockReward()) {}
 
-void Block::reset(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees) {
-    height = parent_->height + BlockHeight(1);
-    timeMined = timeSeconds_;
-    timeBroadcast = timeMax;
-    value = txFees + parent_->nextBlockReward();
-    txFeesInChain = txFees + parent_->txFeesInChain;
-    valueInChain = txFees + parent_->valueInChain + parent_->nextBlockReward();
-    blockReward = parent_->nextBlockReward();
-    parent = parent_;
-    miner = miner_;
-}
-
 Value Block::nextBlockReward() const {
     return blockReward;
+}
+
+Value Block::nextContractReward() const {
+    return feeContract->nextClaim();
 }
 
 void Block::broadcast(BlockTime timePub) {
