@@ -133,7 +133,6 @@ Value FeeSimulator::getValue(BlockTime from, BlockTime until, BlockHeight height
             current++;
         } while (current <= rawTime(until) / rawBlockRate(secondsPerBlock));
     }
-    COMMENTARY("New tx fees added to chain: " << reward << std::endl);
 
     return reward;
 }
@@ -146,6 +145,8 @@ Value FeeSimulator::addValueToChain(BlockTime from, BlockTime until, BlockHeight
 
     if (fullMempool)
         addHeight++;
+
+    COMMENTARY("New tx fees added to chain (Before split): " << getValue(from, until, height) << std::endl);
 
     return getValue(from, until, height);
 }
