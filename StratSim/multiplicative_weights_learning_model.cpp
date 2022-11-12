@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 10/24/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 11/11/22.
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 #include "multiplicative_weights_learning_model.hpp"
 
@@ -15,7 +18,7 @@
 #include <math.h>
 #include <algorithm>
 
-MultiplicativeWeightsLearningModel::MultiplicativeWeightsLearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount_, std::string resultFolder) : LearningModel(learningStrategies, minerCount_, resultFolder) {
+MultiplicativeWeightsLearningModel::MultiplicativeWeightsLearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount_, std::string resultFolder, std::string contractFolder) : LearningModel(learningStrategies, minerCount_, resultFolder, contractFolder) {
     std::vector<StratWeight> weights = getCurrentWeights();
     probabilities.reserve(stratCount);
     std::transform(begin(weights), end(weights), std::back_inserter(probabilities), [](const auto &weight) { return rawWeight(weight); });

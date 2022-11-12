@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 10/24/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 11/11/22.
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 #include "exp3_learning_model.hpp"
 
@@ -15,7 +18,7 @@
 #include <math.h>
 #include <assert.h>
 
-Exp3LearningModel::Exp3LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies_, size_t minerCount_, std::string resultFolder) : LearningModel(learningStrategies_, minerCount_, resultFolder) {
+Exp3LearningModel::Exp3LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies_, size_t minerCount_, std::string resultFolder, std::string contractFolder) : LearningModel(learningStrategies_, minerCount_, resultFolder, contractFolder) {
     std::vector<StratWeight> weights = getCurrentWeights();
     minersWeights.reserve(minerCount);
     minersProbabilities.resize(minerCount);

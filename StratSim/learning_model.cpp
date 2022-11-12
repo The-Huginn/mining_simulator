@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 10/24/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 11/11/22.
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 #include "learning_model.hpp"
 
@@ -26,13 +29,18 @@
 #include <iostream>
 #include <sys/stat.h>
 
-LearningModel::LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies_, size_t minerCount_, std::string resultFolder) : learningStrategies(std::move(learningStrategies_)), stratCount(learningStrategies.size()), minerCount(minerCount_) {
+LearningModel::LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies_, size_t minerCount_, std::string resultFolder, std::string contractFolder) : learningStrategies(std::move(learningStrategies_)), stratCount(learningStrategies.size()), minerCount(minerCount_) {
     
     assert(learningStrategies.size() > 0);
     
     char final [256];
     sprintf (final, "./%s", resultFolder.c_str());
     mkdir(final,0775);
+
+    // Dangerous! Clears directory from previous runs
+    system(("rm -r ./" + contractFolder).c_str());
+    mkdir(("./" + contractFolder).c_str(), 0775);
+    contractDir = contractFolder;
     
     outputStreams.reserve(stratCount);
     chosenStrats.resize(minerCount);
@@ -56,6 +64,16 @@ void LearningModel::writeWeights(unsigned int gameNum) {
     for (size_t strategyIndex = 0; strategyIndex < learningStrategies.size(); strategyIndex++) {
         outputStreams[strategyIndex] << gameNum << " " << learningStrategies[strategyIndex]->weight << std::endl;
     }
+}
+
+void LearningModel::writeContract(unsigned int gameNum, const Block &winner) {
+    auto winningChain = winner.getChain();
+    std::reverse(winningChain.begin(), winningChain.end());
+    std::ofstream output(contractDir + "/game-" + std::to_string(gameNum) + ".txt");
+    for (auto block : winningChain) {
+        output << block->height << " " << block->feeContract->totalValue() << std::endl;
+    }
+    output.close();
 }
 
 void LearningModel::pickNewStrategies(double phi, std::vector<Miner *> &miners, const Blockchain &chain) {

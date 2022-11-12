@@ -5,16 +5,21 @@
 //  Created by Harry Kalodner on 10/24/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 11/11/22.
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 #ifndef learning_model_hpp
 #define learning_model_hpp
 
 #include "BlockSim/typeDefs.hpp"
+#include "BlockSim/block.hpp"
 
 #include <stdio.h>
 #include <vector>
 #include <map>
 #include <memory>
+#include <string>
 
 struct GameResult;
 class LearningStrategy;
@@ -27,6 +32,7 @@ private:
     std::vector<std::ofstream> outputStreams;
     std::vector<std::unique_ptr<LearningStrategy>> learningStrategies;
     std::vector<size_t> chosenStrats;
+    std::string contractDir;
 protected:
     const size_t stratCount;
     const size_t minerCount;
@@ -38,7 +44,7 @@ protected:
     size_t getChosenStrat(size_t i) const;
 public:
     
-    LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount, std::string resultFolder);
+    LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount, std::string resultFolder, std::string contractFolder);
     virtual ~LearningModel();
     
     virtual void updateWeights(std::vector<Value> profits, Value maxPossibleProfit, double phi) = 0;
@@ -47,6 +53,7 @@ public:
     void pickNewStrategies(double phi, std::vector<Miner *> &miners, const Blockchain &chain);
     void updateWeights(GameResult &gameResult, Value maxPossibleProfit, double phi);
     void writeWeights(unsigned int gameNum);
+    void writeContract(unsigned int gameNum, const Block &winner);
     void printWeights();
 };
 
