@@ -20,6 +20,7 @@
 #include "BlockSim/game_result.hpp"
 #include "BlockSim/typeDefs.hpp"
 #include "BlockSim/miner.hpp"
+#include "BlockSim/StatLogger.hpp"
 
 #include "multiplicative_weights_learning_model.hpp"
 #include "exp3_learning_model.hpp"
@@ -35,7 +36,7 @@
 #define NOISE_IN_TRANSACTIONS false //miners don't put the max value they can into a block (simulate tx latency)
 
 #define NETWORK_DELAY BlockTime(0)         //network delay in seconds for network to hear about your block
-#define EXPECTED_NUMBER_OF_BLOCKS BlockCount(1000)
+#define EXPECTED_NUMBER_OF_BLOCKS BlockCount(10000)
 
 #define LAMBERT_COEFF 0.13533528323661//coeff for lambert func equil  must be in [0,.2]
 //0.13533528323661 = 1/(e^2)
@@ -69,6 +70,8 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
     if (settings.folderPrefix.length() > 0) {
         resultFolder += settings.folderPrefix + "-";
     }
+
+    StatLogger statLogger("contracts", "simulator");
     
     resultFolder += std::to_string(rawCount(settings.fixedDefault));
     
@@ -114,7 +117,8 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
         GAMEINFO("\n\nGame#: " << gameNum << " The board is set, the pieces are in motion..." << std::endl);
         
         auto result = runGame(minerGroup, *blockchain, settings.gameSettings);
-        learningModel->writeContract(gameNum, blockchain->winningHead());
+        statLogger.log(gameNum, *blockchain);
+
 
         GAMEINFO("Value in longest: " << result.moneyInLongestChain << " (" << gameNum + 1 << "/" << settings.numberOfGames << ")" << std::endl);
         GAMEINFO("The game is complete. Calculate the scores:" << std::endl);
@@ -171,14 +175,15 @@ void runSingleStratGame(RunSettings settings) {
 
 int main(int argc, const char * argv[]) {
     
-    if (argc < 2) {
-        std::cerr << "Please specify how many games you want to run using argument" << std::endl;
+    if (argc < 3) {
+        std::cerr << "Please specify how many games and length of chain using arguments" << std::endl;
         return -1;
     }
 
-    unsigned int gameCount = std::atoi(argv[1]);
+    unsigned int expectedBlocks = std::atoi(argv[1]);
+    unsigned int gameCount = std::atoi(argv[2]);
 
-    BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, B, EXPECTED_NUMBER_OF_BLOCKS};
+    BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, B, expectedBlocks};
     GameSettings gameSettings = {blockchainSettings};
     
 //    
@@ -187,7 +192,7 @@ int main(int argc, const char * argv[]) {
 //        runSingleStratGame(runSettings);
 //    }
     
-    RunSettings runSettings = {gameCount, MinerCount(200), MinerCount(0), gameSettings, "test"};
+    RunSettings runSettings = {gameCount, MinerCount(200), MinerCount(200), gameSettings, "test"};
     runSingleStratGame(runSettings);
     
 }
