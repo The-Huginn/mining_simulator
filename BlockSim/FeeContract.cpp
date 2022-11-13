@@ -36,6 +36,10 @@ Value FeeContract::Contract::totalValue() {
     return value_con;
 }
 
+HeightType FeeContract::Contract::getLength() {
+    return length_red;
+}
+
 FeeContract::FeeContract() {};
 
 FeeContract::FeeContract(const char filepath[]) {
@@ -95,14 +99,22 @@ Value FeeContract::nextClaim() {
     return claim;
 }
 
-Value FeeContract::totalValue() {
+void FeeContract::printHeader(std::ofstream &output) {
+    for (const auto& pair : contracts) {
+        output << pair.first << "(" << pair.second->getLength() << ") ";
+    }
+    output << "total" << std::endl;
+}
+
+void FeeContract::printValue(std::ofstream &output) {
     Value total(0);
 
     for (const auto& pair : contracts) {
         total += pair.second->totalValue();
+        output << pair.second->totalValue() << " ";
     }
 
-    return total;
+    output << total << std::endl;
 }
 
 std::pair<Value, Value> FeeContract::getFeeRate(Value fees) {

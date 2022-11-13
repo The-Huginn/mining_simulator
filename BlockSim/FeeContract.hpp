@@ -19,6 +19,7 @@
 
 #include <vector>
 #include <memory>
+#include <fstream>
 
 #include "typeDefs.hpp"
 
@@ -40,6 +41,8 @@ class FeeContract {
 
                 Value nextClaim();
                 Value totalValue();
+
+                HeightType getLength();
         };
 
         static Value toContracts;
@@ -57,7 +60,9 @@ class FeeContract {
         std::pair<Value, std::unique_ptr<FeeContract>> claimAndCollect(Value collected);
 
         Value nextClaim();
-        Value totalValue();
+
+        void printHeader(std::ofstream &output);
+        void printValue(std::ofstream &output);
 
         // pair.first is kept as tx fees by the miner
         // pair.second is sent to the contract(s)
