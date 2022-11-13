@@ -8,6 +8,7 @@ to_contracts=50
 mempool=false
 
 games=100
+blockchain_length=10000
 
 # Where evolution of miners is saved
 indexDir="test-0"
@@ -41,6 +42,7 @@ print_help() {
     echo -e "-p     Script will run simulations with different '.percentage' parameter in feeContract.json\n"
     echo -e "-r     Script will run single simulation.\n"
     echo -e "-g     Requires one parameter. Sets how many games will be run for each execution of the simulator.\n"
+    echo -e "-b     Requires one parameter. Sets how many block should be on average created.\n"
     echo -e "-v     Script will not redirect output of program and will display it in the console.\n ${Green}Please note you will need to call 'make clean' before calling this script after changing logging.h for changes to apply.\n ${Color_Off}"
 }
 
@@ -48,8 +50,9 @@ print_help() {
 #####################
 # Loading arguments #
 #####################
-while getopts "schprg:v" opt;
+while getopts "schprg:b:v" opt;
 do
+    re='^[0-9]+$'
     case $opt in
         s)
             echo -e "Using custom Fee Simulator [$simulator]\n"
@@ -74,12 +77,19 @@ do
             ;;
         g)
             games=${OPTARG}
-            re='^[0-9]+$'
             if ! [[ $games =~ $re ]] ; then
                 echo "Number of games is expected to be integer, exiting..." >&2
                 exit 1
             fi
             echo -e "Each simulation will be run with ${games} games.\n"
+            ;;
+        b)
+            blockchain_length=${OPTARG}
+            if ! [[ $blockchain_length =~ $re ]] ; then
+                echo "Average number of block is expected to be integer, exiting..." >&2
+                exit 1
+            fi
+            echo -e "Each simulation will try to create ${blockchain_length} blocks.\n"
             ;;
         v)
             echo -e "Will be priting outputs of program.\n"
@@ -116,11 +126,19 @@ tmp=$(mktemp /tmp/tmp.XXXXXXX)
 # Execution of script #
 #######################
 
-echo -e "\n----------------\n"
+echo -e "${Green}\n+----------------------+\n"
+echo -e "| Starting Simulations |"
+echo -e "\n+----------------------+\n${Color_Off}"
 
 set_fee_values() {
     # Total expected from contracts
     value=$((fees * $1 / 100))
+
+    # Might want to uncomment, but simulating with time-based reward is not recommended
+    # if [ $(jq ".fullMempool" $simulator) == "false" ]
+    # then
+    #     value=$(echo "scale=0; $value * 2" | bc)
+    # fi
 
     newValues=$(jq -r ".contracts[] | .value = ${value} * .percentage / 100 * .length" $contracts)
     newValues=$(echo $newValues | jq -n ".contracts |= [inputs]")
@@ -130,15 +148,16 @@ run_simulation() {
     rm -rf $indexDir/*
     if [ $PRINT_OUTPUT ]
     then
-        ./strat $games
+        ./strat $blockchain_length $games
     else
-        ./strat $games >/dev/null 2>&1
+        ./strat $blockchain_length $games >/dev/null 2>&1
     fi
 }
 
 if [ $PERCENTAGE ]
 then
-    for i in {0..95..5}
+    # for i in {0..95..5}
+    for i in 30 50 70 90
     do
         echo "toContract set to $i"
 
@@ -154,6 +173,8 @@ then
 
         cp contracts/game-0.txt $outputDir/percentage/$i/toContract-beforeEvolution.txt
         cp contracts/game-$(($games - 1)).txt $outputDir/percentage/$i/toContract-afterEvolution.txt
+        cp simulator/game-0.txt $outputDir/percentage/$i/feeSimulator-beforeEvolution.txt
+        cp simulator/game-$(($games - 1)).txt $outputDir/percentage/$i/feeSimulator-afterEvolution.txt
         cp $indexDir/* $outputDir/percentage/$i
     done
 fi
@@ -170,6 +191,8 @@ then
 
     cp contracts/game-0.txt $outputDir/single/toContract-beforeEvolution.txt
     cp contracts/game-$(($games - 1)).txt $outputDir/single/toContract-afterEvolution.txt
+    cp simulator/game-0.txt $outputDir/percentage/$i/feeSimulator-beforeEvolution.txt
+    cp simulator/game-$(($games - 1)).txt $outputDir/percentage/$i/feeSimulator-afterEvolution.txt
     cp $indexDir/* $outputDir/single
 fi
 
@@ -178,5 +201,7 @@ mv $tmpDir/$simulator .
 
 rm -r $tmpDir
 
-echo -e "\n----------------\n"
+echo -e "${Green}\n+----------------------+\n"
+echo -e "| Finished Simulations |"
+echo -e "\n+----------------------+\n${Color_Off}"
 echo -e "Results can be found under directory ${outputDir}"
