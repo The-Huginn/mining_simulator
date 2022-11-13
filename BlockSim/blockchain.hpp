@@ -5,6 +5,9 @@
 //  Created by Harry Kalodner on 5/25/16.
 //  Copyright © 2016 Harry Kalodner. All rights reserved.
 //
+//  Edited by Rastislav Budinsky on 10/31/22.
+//  Copyright © 2022 Rastislav Budinsky. All rights reserved.
+//
 
 #ifndef blockchain_hpp
 #define blockchain_hpp
@@ -33,8 +36,6 @@ class Blockchain {
     std::vector<std::vector<Block *>> _smallestBlocks; // cache smallest blocks of a given height
     std::vector<std::unique_ptr<Block>> _blocks;        // holds all blocks created
     
-    // std::vector<std::unique_ptr<Block>> _oldBlocks;
-    
     Block *blockByMinerAtHeight(BlockHeight height, const Miner &miner) const;
     
 public:
@@ -56,6 +57,8 @@ public:
     const std::vector<Block *> oldestBlocks(BlockHeight height) const;
     Block &oldest(BlockHeight height) const;
     Block &most(BlockHeight age) const;
+
+    FeeSimulator getFeeSimulator();
     
     void advanceToTime(BlockTime time);
     

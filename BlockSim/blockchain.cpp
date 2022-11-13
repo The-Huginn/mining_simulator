@@ -25,7 +25,7 @@ Blockchain::Blockchain(BlockchainSettings blockchainSettings) :
     valueNetworkTotal(0),
     timeInSecs(0),
     secondsPerBlock(blockchainSettings.secondsPerBlock),
-    feeSimulator(FeeSimulator(blockchainSettings.secondsPerBlock)),
+    feeSimulator(FeeSimulator(blockchainSettings)),
     _maxHeightPub(0)
 {
     _blocks.reserve(rawCount(blockchainSettings.numberOfBlocks) * 2);
@@ -136,6 +136,10 @@ void Blockchain::advanceToTime(BlockTime time) {
     assert(time >= timeInSecs);
     valueNetworkTotal += FeeContract::getFeeRate(feeSimulator.addValueToChain(timeInSecs, time, getMaxHeightPub())).first;
     timeInSecs = time;
+}
+
+FeeSimulator Blockchain::getFeeSimulator() {
+    return feeSimulator;
 }
 
 BlockValue Blockchain::expectedBlockSize() {
