@@ -10,8 +10,10 @@
 #define FEE_SIMULATOR
 
 #include <vector>
+#include <fstream>
 
 #include "typeDefs.hpp"
+#include "blockchain_settings.hpp"
 
 // Stateless class so we do not need to reet it
 class FeeSimulator {
@@ -53,7 +55,7 @@ class FeeSimulator {
         unsigned int getCurrentEpoch(const BlockHeight current, unsigned int begin, unsigned int end);
 
     public:
-        FeeSimulator(BlockRate secondsPerBlock_);
+        FeeSimulator(BlockchainSettings blockchainSettings);
 
         /**
          * @brief Based on fullMempool variable we decide, whether transaction fees are
@@ -68,6 +70,8 @@ class FeeSimulator {
        Value addValueToChain(BlockTime from, BlockTime until, BlockHeight height);
 
         const BlockHeight numberOfBlocks();
+
+        void print(std::ofstream &output);
 
         void reset();
 };

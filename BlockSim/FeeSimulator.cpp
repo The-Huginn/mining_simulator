@@ -44,7 +44,7 @@ Value FeeSimulator::FeeSimulatorEpoch::getValue(const HeightType current, const 
     return ret;
 }
 
-FeeSimulator::FeeSimulator(BlockRate secondsPerBlock_) :secondsPerBlock(secondsPerBlock_), addHeight(0) {
+FeeSimulator::FeeSimulator(BlockchainSettings blockchainSettings) :last(blockchainSettings.numberOfBlocks * 2), secondsPerBlock(blockchainSettings.secondsPerBlock), addHeight(0) {
     using namespace nlohmann;
 
     Value mean(0), deviation(0);
@@ -53,13 +53,11 @@ FeeSimulator::FeeSimulator(BlockRate secondsPerBlock_) :secondsPerBlock(secondsP
     json data = json::parse(f);
     f.close();
 
-    m_assert(data.contains("length") &&
-            data.contains("mean") &&
+    m_assert(data.contains("mean") &&
             data.contains("deviation") &&
             data.contains("fullMempool"),
             "Missing parameters in json");
 
-    last = data.at("length").get<int>();
     mean = data.at("mean").get<Value>();
     fullMempool = data.at("fullMempool").get<bool>();
     deviation = data.at("deviation").get<Value>();
@@ -153,6 +151,12 @@ Value FeeSimulator::addValueToChain(BlockTime from, BlockTime until, BlockHeight
 
 const BlockHeight FeeSimulator::numberOfBlocks() {
     return last;
+}
+
+void FeeSimulator::print(std::ofstream &output) {
+    for (unsigned int i = 0; i < snapshots.size(); i++) {
+        output << i << " " << snapshots[i] << std::endl;
+    }
 }
 
 void FeeSimulator::reset() {
