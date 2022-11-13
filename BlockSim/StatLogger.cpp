@@ -42,7 +42,7 @@ void StatLogger::log(unsigned int gameNum, Blockchain &blockchain) {
     output = std::ofstream(feeSimulator + "/game-" + std::to_string(gameNum) + ".txt");
 
     // Header
-    output << "height tx fees\n";
+    output << "height tx-fees\n";
     blockchain.getFeeSimulator().print(output);
 
     output.close();
