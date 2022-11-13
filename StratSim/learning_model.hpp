@@ -32,7 +32,6 @@ private:
     std::vector<std::ofstream> outputStreams;
     std::vector<std::unique_ptr<LearningStrategy>> learningStrategies;
     std::vector<size_t> chosenStrats;
-    std::string contractDir;
 protected:
     const size_t stratCount;
     const size_t minerCount;
@@ -53,7 +52,6 @@ public:
     void pickNewStrategies(double phi, std::vector<Miner *> &miners, const Blockchain &chain);
     void updateWeights(GameResult &gameResult, Value maxPossibleProfit, double phi);
     void writeWeights(unsigned int gameNum);
-    void writeContract(unsigned int gameNum, const Block &winner);
     void printWeights();
 };
 
