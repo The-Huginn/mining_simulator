@@ -32,15 +32,18 @@ Value FeeSimulator::FeeSimulatorEpoch::getValue(const HeightType current, const 
 
     if (type == CONSTANT) {
         ret = values[0];
-    } else if (type == LINEAR) {
-        ret = values[0] + ((values[1] - values[0]) / (end - start)) * (current - start);
+    } else if (type == LINEAR) { // Split into 3 lines as weird conversions were happening
+        signed long long diff = ((signed long long)values[1] - values[0]);
+        diff /= (end - start);
+        diff *= (current + 1 - start);
+        ret = values[0] + diff;
     } else if (type == NORMAL) {
         std::random_device rd{};
         std::mt19937 gen{rd()};
         std::normal_distribution<> d{values[0] * 1.0, values[1] * 1.0};
         ret = std::round(d(gen));
     }
-
+    m_assert(ret < 10000000000000, "Probably problem with simulated fees too large " + ret);
     return ret;
 }
 
@@ -82,6 +85,13 @@ FeeSimulator::FeeSimulator(BlockchainSettings blockchainSettings) :last(blockcha
         for (long unsigned int i = 0; i < vals.size(); i++) {
             values[i] = vals[i];
         }
+
+        if (type == CONSTANT)
+            m_assert(vals.size() == 1,"Expecting one value for Epoch starting at height: " + start);
+        else if (type == LINEAR)
+            m_assert(vals.size() == 2,"Expecting two values for Epoch starting at height: " + start);
+        else if (type == CONSTANT)
+            m_assert(vals.size() == 1,"Expecting zero or two values for Epoch starting at height: " + start);
         
         if (type == NORMAL && vals.empty()) {
             values[0] = mean;
@@ -155,7 +165,7 @@ const BlockHeight FeeSimulator::numberOfBlocks() {
 
 void FeeSimulator::print(std::ofstream &output) {
     for (unsigned int i = 0; i < snapshots.size(); i++) {
-        output << i << " " << snapshots[i] << std::endl;
+        output << snapshots[i] << std::endl;
     }
 }
 
