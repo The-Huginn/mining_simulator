@@ -1,25 +1,25 @@
 {
+  "toContracts": 70,
   "contracts": [
     {
       "percentage": 10,
-      "length": 2016,
-      "value": 705600000000
+      "length": 1008,
+      "value": 352800000000
     },
     {
       "percentage": 20,
-      "length": 4032,
-      "value": 2822400000000
+      "length": 2016,
+      "value": 1411200000000
     },
     {
       "percentage": 30,
-      "length": 6048,
-      "value": 6350400000000
+      "length": 4032,
+      "value": 4233600000000
     },
     {
       "percentage": 40,
       "length": 8064,
       "value": 11289600000000
     }
-  ],
-  "toContracts": 70
+  ]
 }

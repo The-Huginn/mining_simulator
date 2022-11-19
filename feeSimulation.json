@@ -1,14 +1,140 @@
 {
-  "length": 100000,
-  "mean": 100000000,
-  "deviation": 100000,
-  "fullMempool": false,
+  "mean": 5000000000,
+  "deviation": 500000000,
+  "fullMempool": true,
   "timeline": [
     {
       "start": 0,
-      "epochType": 0,
+      "epochType": 2,
       "values": [
+        5000000000,
+        500000000
+      ]
+    },
+    {
+      "start": 2500,
+      "epochType": 1,
+      "values": [
+        5000000000,
+        10000000000
+      ]
+    },
+    {
+      "start": 3000,
+      "epochType": 2,
+      "values": [
+        10000000000,
+        500000000
+      ]
+    },
+    {
+      "start": 9500,
+      "epochType": 1,
+      "values": [
+        10000000000,
+        25000000000
+      ]
+    },
+    {
+      "start": 10000,
+      "epochType": 2,
+      "values": [
+        25000000000,
+        2500000000
+      ]
+    },
+    {
+      "start": 19500,
+      "epochType": 1,
+      "values": [
+        25000000000,
+        10000000000
+      ]
+    },
+    {
+      "start": 20000,
+      "epochType": 2,
+      "values": [
+        10000000000,
+        1000000000
+      ]
+    },
+    {
+      "start": 24500,
+      "epochType": 1,
+      "values": [
+        10000000000,
+        1000000000
+      ]
+    },
+    {
+      "start": 25000,
+      "epochType": 2,
+      "values": [
+        1000000000,
+        100000000
+      ]
+    },
+    {
+      "start": 30000,
+      "epochType": 1,
+      "values": [
+        1000000000,
+        15000000000
+      ]
+    },
+    {
+      "start": 35000,
+      "epochType": 1,
+      "values": [
+        15000000000,
         5000000000
+      ]
+    },
+    {
+      "start": 39500,
+      "epochType": 1,
+      "values": [
+        5000000000,
+        1000000000
+      ]
+    },
+    {
+      "start": 40000,
+      "epochType": 2,
+      "values": [
+        1000000000,
+        100000000
+      ]
+    },
+    {
+      "start": 44500,
+      "epochType": 1,
+      "values": [
+        1000000000,
+        10000000000
+      ]
+    },
+    {
+      "start": 45000,
+      "epochType": 2,
+      "values": [
+        10000000000,
+        1000000000
+      ]
+    },
+    {
+      "start": 49500,
+      "epochType": 1,
+      "values": [
+        10000000000,
+        5000000000
+      ]
+    },
+    {
+      "start": 50000,
+      "epochType": 2,
+      "values": [
       ]
     }
   ]
