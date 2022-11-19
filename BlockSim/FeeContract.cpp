@@ -100,6 +100,7 @@ Value FeeContract::nextClaim() {
 }
 
 void FeeContract::printHeader(std::ofstream &output) {
+    output << "next ";
     for (const auto& pair : contracts) {
         output << pair.first << "(" << pair.second->getLength() << ") ";
     }
@@ -109,6 +110,7 @@ void FeeContract::printHeader(std::ofstream &output) {
 void FeeContract::printValue(std::ofstream &output) {
     Value total(0);
 
+    output << nextClaim() << " ";
     for (const auto& pair : contracts) {
         total += pair.second->totalValue();
         output << pair.second->totalValue() << " ";
