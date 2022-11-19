@@ -1,6 +1,7 @@
 reset
 
 folder = "../simulation/percentage/90"
+name = "fees-4-90"
 length = 60000
 average = 5
 
@@ -16,28 +17,14 @@ set xrange [0:length]
 set format y '%#.2g'
 
 # set key at screen 0.1, screen 0.8
-set key center top
+set key outside
 set style fill solid
 
 # set term pngcairo interlace enhanced crop size 1920, 1080
-# set output "fees.png"
-dpi = 300 ## dpi (variable)
-width = 90 ## mm (variable)
-height = 164.5 ## mm (variable)
-
-in2mm = 25.4 # mm (fixed)
-pt2mm = 0.3528 # mm (fixed)
-
-mm2px = dpi/in2mm
-ptscale = pt2mm*mm2px
-round(x) = x - floor(x) < 0.5 ? floor(x) : ceil(x)
-wpx = round(width * mm2px)
-hpx = round(height * mm2px)
-# set terminal pngcairo size 1920, 1080
-# set output "fees.png"
 
 set term pngcairo size 1920, 1080
-set output sprintf("%s/fees.png", folder)
+set output sprintf("%s/%s.png", folder, name)
+
 blue = "blue"
 green = "green"
 black = "black"

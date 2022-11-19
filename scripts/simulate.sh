@@ -172,8 +172,11 @@ run_simulation() {
 
 plot() {
     final=$1
+    name=$2
     sed -i "s|^folder.*|folder = \"$final\"|" fees.plt
+    sed -i "s|^name.*|name = \"fees-$name\"|" fees.plt
     sed -i "s|^folder.*|folder = \"$final\"|" contracts.plt
+    sed -i "s|^name.*|name = \"contracts-$name\"|" contracts.plt
     gnuplot fees.plt
     gnuplot contracts.plt
 }
@@ -211,7 +214,7 @@ then
 
         if [ $PLOT ]
         then
-            plot $outputDir/percentage/$i
+            plot $outputDir/percentage/$i $(jq '.contracts | length' $contracts)-$i
         fi
     done
 fi
@@ -230,7 +233,7 @@ then
 
     if [ $PLOT ]
     then
-        plot $outputDir/single
+        plot $outputDir/single $(jq '.contracts | length' $contracts)-$i
     fi
 fi
 
