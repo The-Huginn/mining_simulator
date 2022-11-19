@@ -181,12 +181,12 @@ plot() {
 copy_outputs() {
     outputDirectory=$1
     
-    cp $baseDir/contracts/game-0.txt $outputDirectory/toContract-beforeEvolution.txt
-    cp $baseDir/contracts/game-$(($games - 1)).txt $outputDirectory/toContract-afterEvolution.txt
-    cp $baseDir/simulator/game-blocks-0.txt $outputDirectory/blockValues-beforeEvolution.txt
-    cp $baseDir/simulator/game-blocks-$(($games - 1)).txt $outputDirectory/blockValues-afterEvolution.txt
-    cp $baseDir/simulator/game-0.txt $outputDirectory/feeSimulator-beforeEvolution.txt
-    cp $baseDir/simulator/game-$(($games - 1)).txt $outputDirectory/feeSimulator-afterEvolution.txt
+    cp contracts/game-0.txt $outputDirectory/toContract-beforeEvolution.txt
+    cp contracts/game-$(($games - 1)).txt $outputDirectory/toContract-afterEvolution.txt
+    cp simulator/game-blocks-0.txt $outputDirectory/blockValues-beforeEvolution.txt
+    cp simulator/game-blocks-$(($games - 1)).txt $outputDirectory/blockValues-afterEvolution.txt
+    cp simulator/game-0.txt $outputDirectory/feeSimulator-beforeEvolution.txt
+    cp simulator/game-$(($games - 1)).txt $outputDirectory/feeSimulator-afterEvolution.txt
     cp $indexDir/* $outputDirectory
 }
 
@@ -234,10 +234,15 @@ then
     fi
 fi
 
+###########################
+# Cleanup after execution #
+###########################
+
 mv $tmpDir/$contracts $baseDir
 mv $tmpDir/$simulator $baseDir
 
-rm -r $tmpDir
+rm -r $tmpDir contracts simulator $indexDir
+rm $contracts $simulator
 
 echo -e "${Green}\n+----------------------+"
 echo -e "| Finished Simulations |"
