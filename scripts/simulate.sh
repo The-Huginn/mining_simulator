@@ -11,7 +11,7 @@ games=100
 blockchain_length=10000
 
 # Where evolution of miners is saved
-indexDir="test-0"
+indexDir="test-200"
 
 tmpDir="tmp"
 
@@ -20,6 +20,8 @@ tmpDir="tmp"
 # Should not be changed other parts are hard coded depending on this parameter
 fees=5000000000
 
+# Base directory of the main program executable
+baseDir=".."
 # -- Do not edit after this --
 
 echo -e "\nSimulation for different contract percentage of fee ratio toMiner/toContract\n"
@@ -33,7 +35,7 @@ contracts="feeContracts.json"
 simulator="feeSimulation.json"
 
 mkdir -p $tmpDir
-mv $contracts $simulator $tmpDir
+mv $baseDir/$contracts $baseDir/$simulator $tmpDir
 
 print_help() {
     echo -e "-h     Displays this message.${Yellow} One of these flags should be specified{-p, -r}\n${Color_Off}"
@@ -41,8 +43,9 @@ print_help() {
     echo -e "-s     Script will use custom feeSimulation.json. It will not change your current feeSimulation.json config file\n"
     echo -e "-p     Script will run simulations with different '.percentage' parameter in feeContract.json\n"
     echo -e "-r     Script will run single simulation.\n"
-    echo -e "-g     Requires one parameter. Sets how many games will be run for each execution of the simulator.\n"
-    echo -e "-b     Requires one parameter. Sets how many block should be on average created.\n"
+    echo -e "-i     Script will use fees.plt and contracts.plt to plot Images. You should prepare scripts except variables 'folder' and 'length'\n"
+    echo -e "-g     Requires one parameter. Sets how many games will be run for each execution of the simulator. Default value: $games\n"
+    echo -e "-b     Requires one parameter. Sets how many block should be on average created. Default value: $blockchain_length\n"
     echo -e "-v     Script will not redirect output of program and will display it in the console.\n ${Green}Please note you will need to call 'make clean' before calling this script after changing logging.h for changes to apply.\n ${Color_Off}"
 }
 
@@ -50,7 +53,7 @@ print_help() {
 #####################
 # Loading arguments #
 #####################
-while getopts "schprg:b:v" opt;
+while getopts "schprig:b:v" opt;
 do
     re='^[0-9]+$'
     case $opt in
@@ -74,6 +77,10 @@ do
         r)
             echo -e "Will run single simulation.\n"
             SINGLE=true
+            ;;
+        i)
+            echo -e "Will plot images from results\n"
+            PLOT=true
             ;;
         g)
             games=${OPTARG}
@@ -112,9 +119,9 @@ fi
 # Set up variables #
 ####################
 
-make all
+(cd $baseDir && make all)
 
-outputDir=$([ $1 ] && echo $1 || echo "simulation")
+outputDir=$baseDir/$([ $1 ] && echo $1 || echo "simulation")
 
 [ ! -f $simulator ] && jq -n "{\"length\": 100000,\"mean\": 100000000,\"deviation\": 100000,\"fullMempool\": $mempool,\"timeline\": [{\"start\": 0,\"epochType\": 0,\"values\": [5000000000]}]}" > $simulator
 
@@ -122,13 +129,19 @@ outputDir=$([ $1 ] && echo $1 || echo "simulation")
 
 tmp=$(mktemp /tmp/tmp.XXXXXXX)
 
+if [ $PLOT ]
+then
+    sed -i "s/^length.*/length = ${blockchain_length}/" fees.plt
+    sed -i "s/^length.*/length = ${blockchain_length}/" contracts.plt
+fi
+
 #######################
 # Execution of script #
 #######################
 
-echo -e "${Green}\n+----------------------+\n"
+echo -e "${Green}\n+----------------------+"
 echo -e "| Starting Simulations |"
-echo -e "\n+----------------------+\n${Color_Off}"
+echo -e "+----------------------+\n${Color_Off}"
 
 set_fee_values() {
     # Total expected from contracts
@@ -145,13 +158,36 @@ set_fee_values() {
 }
 
 run_simulation() {
+    LD_LIBRARY_PATH=/usr/local/lib
+    export LD_LIBRARY_PATH
+
     rm -rf $indexDir/*
     if [ $PRINT_OUTPUT ]
     then
-        ./strat $blockchain_length $games
+        $baseDir/strat $blockchain_length $games
     else
-        ./strat $blockchain_length $games >/dev/null 2>&1
+        $baseDir/strat $blockchain_length $games >/dev/null 2>&1
     fi
+}
+
+plot() {
+    final=$1
+    sed -i "s|^folder.*|folder = \"$final\"|" fees.plt
+    sed -i "s|^folder.*|folder = \"$final\"|" contracts.plt
+    gnuplot fees.plt
+    gnuplot contracts.plt
+}
+
+copy_outputs() {
+    outputDirectory=$1
+    
+    cp $baseDir/contracts/game-0.txt $outputDirectory/toContract-beforeEvolution.txt
+    cp $baseDir/contracts/game-$(($games - 1)).txt $outputDirectory/toContract-afterEvolution.txt
+    cp $baseDir/simulator/game-blocks-0.txt $outputDirectory/blockValues-beforeEvolution.txt
+    cp $baseDir/simulator/game-blocks-$(($games - 1)).txt $outputDirectory/blockValues-afterEvolution.txt
+    cp $baseDir/simulator/game-0.txt $outputDirectory/feeSimulator-beforeEvolution.txt
+    cp $baseDir/simulator/game-$(($games - 1)).txt $outputDirectory/feeSimulator-afterEvolution.txt
+    cp $indexDir/* $outputDirectory
 }
 
 if [ $PERCENTAGE ]
@@ -171,11 +207,12 @@ then
         mkdir -p $outputDir/percentage/$i
         rm -rf $outputDir/percentage/$i/*
 
-        cp contracts/game-0.txt $outputDir/percentage/$i/toContract-beforeEvolution.txt
-        cp contracts/game-$(($games - 1)).txt $outputDir/percentage/$i/toContract-afterEvolution.txt
-        cp simulator/game-0.txt $outputDir/percentage/$i/feeSimulator-beforeEvolution.txt
-        cp simulator/game-$(($games - 1)).txt $outputDir/percentage/$i/feeSimulator-afterEvolution.txt
-        cp $indexDir/* $outputDir/percentage/$i
+        copy_outputs $outputDir/percentage/$i
+
+        if [ $PLOT ]
+        then
+            plot $outputDir/percentage/$i
+        fi
     done
 fi
 
@@ -189,19 +226,20 @@ then
     mkdir -p $outputDir/single
     rm -rf $outputDir/single/*
 
-    cp contracts/game-0.txt $outputDir/single/toContract-beforeEvolution.txt
-    cp contracts/game-$(($games - 1)).txt $outputDir/single/toContract-afterEvolution.txt
-    cp simulator/game-0.txt $outputDir/percentage/$i/feeSimulator-beforeEvolution.txt
-    cp simulator/game-$(($games - 1)).txt $outputDir/percentage/$i/feeSimulator-afterEvolution.txt
-    cp $indexDir/* $outputDir/single
+    copy_outputs $outputDir/single
+
+    if [ $PLOT ]
+    then
+        plot $outputDir/single
+    fi
 fi
 
-mv $tmpDir/$contracts .
-mv $tmpDir/$simulator .
+mv $tmpDir/$contracts $baseDir
+mv $tmpDir/$simulator $baseDir
 
 rm -r $tmpDir
 
-echo -e "${Green}\n+----------------------+\n"
+echo -e "${Green}\n+----------------------+"
 echo -e "| Finished Simulations |"
-echo -e "\n+----------------------+\n${Color_Off}"
+echo -e "+----------------------+\n${Color_Off}"
 echo -e "Results can be found under directory ${outputDir}"
