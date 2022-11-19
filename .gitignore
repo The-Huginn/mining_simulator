@@ -3,3 +3,5 @@ test-*/
 simulation/
 contracts/
 simulator/
+strat
+selfish
