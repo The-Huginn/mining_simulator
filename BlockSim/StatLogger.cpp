@@ -28,21 +28,19 @@ void StatLogger::log(unsigned int gameNum, Blockchain &blockchain) {
     auto winningChain = blockchain.winningHead().getChain();
     std::reverse(winningChain.begin(), winningChain.end());
     std::ofstream output(feeContracts + "/game-" + std::to_string(gameNum) + ".txt");
+    std::ofstream output2(feeSimulator + "/game-blocks-" + std::to_string(gameNum) + ".txt");
 
     // Header is the same for every block
-    output << "height ";
     winningChain.back()->feeContract->printHeader(output);
-
     for (auto block : winningChain) {
-        output << block->height << " ";
         block->feeContract->printValue(output);
+        output2 << block->value << std::endl;
     }
     output.close();
+    output2.close();
 
     output = std::ofstream(feeSimulator + "/game-" + std::to_string(gameNum) + ".txt");
 
-    // Header
-    output << "height tx-fees\n";
     blockchain.getFeeSimulator().print(output);
 
     output.close();
