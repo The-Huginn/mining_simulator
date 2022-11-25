@@ -18,7 +18,7 @@
 #include <math.h>
 #include <assert.h>
 
-Exp3LearningModel::Exp3LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies_, size_t minerCount_, std::string resultFolder, std::string contractFolder) : LearningModel(learningStrategies_, minerCount_, resultFolder, contractFolder) {
+Exp3LearningModel::Exp3LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies_, size_t minerCount_, std::string resultFolder) : LearningModel(learningStrategies_, minerCount_, resultFolder) {
     std::vector<StratWeight> weights = getCurrentWeights();
     minersWeights.reserve(minerCount);
     minersProbabilities.resize(minerCount);

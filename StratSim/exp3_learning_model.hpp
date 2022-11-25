@@ -25,7 +25,7 @@ private:
     std::vector<double> probabilitiesForMiner(size_t minerIndex, double phi) override;
     
 public:
-    Exp3LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount, std::string resultFolder, std::string contractFolder);
+    Exp3LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount, std::string resultFolder);
 };
 
 

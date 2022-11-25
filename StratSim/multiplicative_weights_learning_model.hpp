@@ -23,7 +23,7 @@ private:
     std::vector<double> probabilitiesForMiner(size_t minerIndex, double phi) override;
     void updateWeights(std::vector<Value> profits, Value maxPossibleProfit, double phi) override;
 public:
-    MultiplicativeWeightsLearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount, std::string resultFolder, std::string contractFolder);
+    MultiplicativeWeightsLearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount, std::string resultFolder);
     
 };
 

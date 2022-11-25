@@ -18,7 +18,7 @@
 #include <math.h>
 #include <algorithm>
 
-MultiplicativeWeightsLearningModel::MultiplicativeWeightsLearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount_, std::string resultFolder, std::string contractFolder) : LearningModel(learningStrategies, minerCount_, resultFolder, contractFolder) {
+MultiplicativeWeightsLearningModel::MultiplicativeWeightsLearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount_, std::string resultFolder) : LearningModel(learningStrategies, minerCount_, resultFolder) {
     std::vector<StratWeight> weights = getCurrentWeights();
     probabilities.reserve(stratCount);
     std::transform(begin(weights), end(weights), std::back_inserter(probabilities), [](const auto &weight) { return rawWeight(weight); });

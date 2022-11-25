@@ -29,7 +29,7 @@
 #include <iostream>
 #include <sys/stat.h>
 
-LearningModel::LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies_, size_t minerCount_, std::string resultFolder, std::string contractFolder) : learningStrategies(std::move(learningStrategies_)), stratCount(learningStrategies.size()), minerCount(minerCount_) {
+LearningModel::LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies_, size_t minerCount_, std::string resultFolder) : learningStrategies(std::move(learningStrategies_)), stratCount(learningStrategies.size()), minerCount(minerCount_) {
     
     assert(learningStrategies.size() > 0);
     

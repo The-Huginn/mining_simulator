@@ -43,7 +43,7 @@ protected:
     size_t getChosenStrat(size_t i) const;
 public:
     
-    LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount, std::string resultFolder, std::string contractFolder);
+    LearningModel(std::vector<std::unique_ptr<LearningStrategy>> &learningStrategies, size_t minerCount, std::string resultFolder);
     virtual ~LearningModel();
     
     virtual void updateWeights(std::vector<Value> profits, Value maxPossibleProfit, double phi) = 0;
