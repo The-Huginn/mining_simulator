@@ -11,7 +11,7 @@ games=100
 blockchain_length=10000
 
 # Where evolution of miners is saved
-indexDir="test-200"
+indexDir="mult-17"
 
 tmpDir="tmp"
 
@@ -123,7 +123,7 @@ fi
 
 outputDir=$baseDir/$([ $1 ] && echo $1 || echo "simulation")
 
-[ ! -f $simulator ] && jq -n "{\"length\": 100000,\"mean\": 100000000,\"deviation\": 100000,\"fullMempool\": $mempool,\"timeline\": [{\"start\": 0,\"epochType\": 0,\"values\": [5000000000]}]}" > $simulator
+[ ! -f $simulator ] && jq -n "{\"mean\": 5000000000,\"deviation\": 500000000,\"fullMempool\": $mempool,\"timeline\": [{\"start\": 0,\"epochType\": 0,\"values\": [5000000000]}]}" > $simulator
 
 [ ! -f $contracts ] && jq -n "{\"toContracts\":$to_contracts,\"contracts\":[{\"percentage\":100,\"length\":${length}}]}" > $contracts
 
@@ -244,7 +244,8 @@ fi
 mv $tmpDir/$contracts $baseDir
 mv $tmpDir/$simulator $baseDir
 
-rm -r $tmpDir contracts simulator $indexDir
+rm -r $tmpDir $indexDir
+# rm -r contracts simulator
 rm $contracts $simulator
 
 echo -e "${Green}\n+----------------------+"
