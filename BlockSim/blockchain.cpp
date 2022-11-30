@@ -31,7 +31,7 @@ Blockchain::Blockchain(BlockchainSettings blockchainSettings) :
     _blocks.reserve(rawCount(blockchainSettings.numberOfBlocks) * 2);
     _blocksIndex.resize(rawCount(blockchainSettings.numberOfBlocks) * 2);
     _smallestBlocks.resize(rawCount(blockchainSettings.numberOfBlocks) * 2);
-    reset(blockchainSettings);
+    reset(blockchainSettings, 0.0);
 }
 
 std::unique_ptr<Block> Blockchain::createBlock(const Block *parent, const Miner *miner, Value value) {
@@ -41,7 +41,7 @@ std::unique_ptr<Block> Blockchain::createBlock(const Block *parent, const Miner 
     return block;
 }
 
-void Blockchain::reset(BlockchainSettings blockchainSettings) {
+void Blockchain::reset(BlockchainSettings blockchainSettings, double orphan) {
     valueNetworkTotal = 0;
     timeInSecs = BlockTime(0);
     secondsPerBlock = blockchainSettings.secondsPerBlock;
@@ -52,7 +52,7 @@ void Blockchain::reset(BlockchainSettings blockchainSettings) {
     _blocks.clear();
     _smallestBlocks[0].clear();
     _blocksIndex[0].clear();
-    auto genesis = std::make_unique<Block>(blockchainSettings.blockReward);
+    auto genesis = std::make_unique<Block>(blockchainSettings.blockReward, orphan);
     _smallestBlocks[0].push_back(genesis.get());
     _blocksIndex[0].push_back(_blocks.size());
     _blocks.push_back(std::move(genesis));

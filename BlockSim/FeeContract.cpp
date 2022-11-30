@@ -42,7 +42,7 @@ HeightType FeeContract::Contract::getLength() {
 
 FeeContract::FeeContract() {};
 
-FeeContract::FeeContract(const char filepath[]) {
+FeeContract::FeeContract(const char filepath[], double orphan) {
     using namespace nlohmann;
     
     std::vector<std::pair<ContractCount, HeightType>> initial_split;
@@ -70,6 +70,7 @@ FeeContract::FeeContract(const char filepath[]) {
         ContractCount percentage = it.at("percentage").get<ContractCount>();
         HeightType length = it.at("length").get<HeightType>();
         Value value = it.at("value").get<ValueType>();
+        value += (double)value * orphan;
         contracts.push_back(std::make_pair(percentage, std::make_unique<Contract>(value, length)));
         total += percentage;
     }

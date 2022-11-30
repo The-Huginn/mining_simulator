@@ -42,7 +42,7 @@ public:
     Blockchain(BlockchainSettings blockchainSettings);
     
     std::unique_ptr<Block> createBlock(const Block *parent, const Miner *miner, Value value);
-    void reset(BlockchainSettings blockchainSettings);
+    void reset(BlockchainSettings blockchainSettings, double orphan);
 
     void publishBlock(std::unique_ptr<Block> block);
     

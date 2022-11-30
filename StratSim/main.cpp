@@ -90,8 +90,8 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
         }
     }
     
-//    LearningModel *learningModel = new MultiplicativeWeightsLearningModel(learningStrategies, learningMiners.size(), resultFolder);
-    LearningModel *learningModel = new Exp3LearningModel(learningStrategies, learningMiners.size(), resultFolder, "contracts");
+    LearningModel *learningModel = new MultiplicativeWeightsLearningModel(learningStrategies, learningMiners.size(), resultFolder);
+    // LearningModel *learningModel = new Exp3LearningModel(learningStrategies, learningMiners.size(), resultFolder);
     
     MinerGroup minerGroup(std::move(miners));
     
@@ -101,13 +101,16 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
     double phi = .01;
     
     auto blockchain = std::make_unique<Blockchain>(settings.gameSettings.blockchainSettings);
+
+    // adjustment for contracts value, important specially when running with mempool = false
+    // if you do not wish this adjustment, comment reassignemnts
+    double orphan = 0.0;
     
     for (unsigned int gameNum = 0; gameNum < settings.numberOfGames; gameNum++) {
 //        double n = gameNum;
 //        double nMax = settings.numberOfGames;
 //        double phi = std::pow(.9, (n / nMax) * 30.0);
-        
-        blockchain->reset(settings.gameSettings.blockchainSettings);
+        blockchain->reset(settings.gameSettings.blockchainSettings, orphan);
         
         learningModel->writeWeights(gameNum);
         minerGroup.reset(*blockchain);
@@ -117,7 +120,7 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
         GAMEINFO("\n\nGame#: " << gameNum << " The board is set, the pieces are in motion..." << std::endl);
         
         auto result = runGame(minerGroup, *blockchain, settings.gameSettings);
-        statLogger.log(gameNum, *blockchain);
+        // statLogger.log(gameNum, *blockchain);
 
 
         GAMEINFO("Value in longest: " << result.moneyInLongestChain << " (" << gameNum + 1 << "/" << settings.numberOfGames << ")" << std::endl);
@@ -132,19 +135,25 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
         blocksInLongestChain += result.blocksInLongestChain;
         
        BlockCount staleBlocks(result.totalBlocksMined - result.blocksInLongestChain);
-       std::cout << result.moneyInLongestChain << " in chain and " <<
-       result.moneyLeftAtEnd << " left with " << 100 * double(rawCount(staleBlocks)) / double(rawCount(result.totalBlocksMined)) << "% orphan rate" <<  std::endl;
+       if (gameNum % 3000 == 0)
+            std::cout << (int)((double)gameNum / settings.numberOfGames * 100) << "% ("<< gameNum << "/" << settings.numberOfGames << ")" << std::endl;
+
+        orphan = double(rawCount(staleBlocks)) / double(rawCount(result.totalBlocksMined));
+
+
+    //    std::cout << result.moneyInLongestChain << " in chain and " <<
+    //    result.moneyLeftAtEnd << " left with " << 100 * double(rawCount(staleBlocks)) / double(rawCount(result.totalBlocksMined)) << "% orphan rate" <<  std::endl;
         
-       std::cout << totalBlocksMined << " total blocks mined" << std::endl;
+    //    std::cout << totalBlocksMined << " total blocks mined" << std::endl;
     }
     learningModel->writeWeights(settings.numberOfGames);
     
-    GAMEINFOBLOCK(
-                  GAMEINFO("Total blocks mined: " << totalBlocksMined << std::endl);
-                  GAMEINFO("Longest chain: " << blocksInLongestChain << std::endl);
-                  GAMEINFO("Games over. Final strategy weights:\n");
-                  learningModel->printWeights();
-                  )
+    // GAMEINFOBLOCK(
+    //               GAMEINFO("Total blocks mined: " << totalBlocksMined << std::endl);
+    //               GAMEINFO("Longest chain: " << blocksInLongestChain << std::endl);
+    //               GAMEINFO("Games over. Final strategy weights:\n");
+    //               learningModel->printWeights();
+    //               )
     
     delete learningModel;
 //    std::cout << 100 * double(rawCount(blocksInLongestChain)) / double(rawCount(totalBlocksMined)) << "% in final chain" << std::endl;
@@ -192,7 +201,7 @@ int main(int argc, const char * argv[]) {
 //        runSingleStratGame(runSettings);
 //    }
     
-    RunSettings runSettings = {gameCount, MinerCount(200), MinerCount(200), gameSettings, "test"};
+    RunSettings runSettings = {gameCount, MinerCount(100), MinerCount(26), gameSettings, "mult"};
     runSingleStratGame(runSettings);
     
 }

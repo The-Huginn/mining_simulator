@@ -17,8 +17,12 @@
 #include <limits>
 
 constexpr auto timeMax = std::numeric_limits<TimeType>::max();
+double Block::orphanRate = 0.0;
 
-Block::Block(BlockValue blockReward_) : Block(nullptr, nullptr, BlockTime(0), Value(0), BlockHeight(0), Value(0), Value(rawValue(blockReward_))) {}
+Block::Block(BlockValue blockReward_, double orphan) : Block(nullptr, nullptr, BlockTime(0), Value(0), BlockHeight(0), Value(0), Value(rawValue(blockReward_))) {
+    // it will be lagging one run behind
+    orphanRate = orphan;
+}
 
 Block::Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees, BlockHeight height_, Value txFeesInChain_, Value blockReward_) : timeBroadcast(timeMax), parent(parent_), miner(miner_), height(height_), timeMined(timeSeconds_), txFeesInChain(txFeesInChain_), blockReward(blockReward_) {
     if (parent != nullptr) {
@@ -29,7 +33,7 @@ Block::Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, 
         valueInChain = parent->valueInChain + value;
 
     } else {
-        feeContract = std::make_unique<FeeContract>(nullptr);
+        feeContract = std::make_unique<FeeContract>(nullptr, orphanRate);
         value = 0;
         valueInChain = 0;
     }

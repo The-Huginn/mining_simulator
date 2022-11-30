@@ -27,6 +27,7 @@ protected:
 public:
     const Block *parent;
     const Miner *miner;
+    static double orphanRate;
     BlockHeight height;
     BlockTime timeMined;
     Value value;
@@ -37,7 +38,7 @@ public:
     
     Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds, Value txFees, BlockHeight height, Value txFeesInChain, Value blockReward);
     
-    Block(BlockValue blockReward);
+    Block(BlockValue blockReward, double orphan);
     Block(const Block *parent_, const Miner *miner_, BlockTime timeSeconds_, Value txFees);
     
     void broadcast(BlockTime timePub);
