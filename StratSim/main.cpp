@@ -90,8 +90,8 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
         }
     }
     
-    LearningModel *learningModel = new MultiplicativeWeightsLearningModel(learningStrategies, learningMiners.size(), resultFolder);
-    // LearningModel *learningModel = new Exp3LearningModel(learningStrategies, learningMiners.size(), resultFolder);
+    // LearningModel *learningModel = new MultiplicativeWeightsLearningModel(learningStrategies, learningMiners.size(), resultFolder);
+    LearningModel *learningModel = new Exp3LearningModel(learningStrategies, learningMiners.size(), resultFolder);
     
     MinerGroup minerGroup(std::move(miners));
     
@@ -120,7 +120,7 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
         GAMEINFO("\n\nGame#: " << gameNum << " The board is set, the pieces are in motion..." << std::endl);
         
         auto result = runGame(minerGroup, *blockchain, settings.gameSettings);
-        // statLogger.log(gameNum, *blockchain);
+        statLogger.log(gameNum, *blockchain);
 
 
         GAMEINFO("Value in longest: " << result.moneyInLongestChain << " (" << gameNum + 1 << "/" << settings.numberOfGames << ")" << std::endl);
@@ -195,13 +195,13 @@ int main(int argc, const char * argv[]) {
     BlockchainSettings blockchainSettings = {SEC_PER_BLOCK, B, expectedBlocks};
     GameSettings gameSettings = {blockchainSettings};
     
-//    
-//    for (MinerCount i(0); i < MinerCount(71); i += MinerCount(6)) {
-//        RunSettings runSettings = {300000, MinerCount(100), i, gameSettings, "mult"};
-//        runSingleStratGame(runSettings);
+   
+//    for (MinerCount i(24); i < MinerCount(25); i += MinerCount(3)) {
+    //    RunSettings runSettings = {gameCount, MinerCount(100), 9, gameSettings, "exp0"};
+    //    runSingleStratGame(runSettings);
 //    }
     
-    RunSettings runSettings = {gameCount, MinerCount(100), MinerCount(26), gameSettings, "mult"};
+    RunSettings runSettings = {gameCount, MinerCount(200), MinerCount(200), gameSettings, "test"};
     runSingleStratGame(runSettings);
     
 }

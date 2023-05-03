@@ -1,8 +1,9 @@
 # !/bin/bash
 
 # When using generated feeContract
-length=2016
-to_contracts=50
+# 5292 & 7, 19, 28, 46
+length=5292
+to_contracts=70
 
 # When using generated feeSimulation
 mempool=false
@@ -11,7 +12,7 @@ games=100
 blockchain_length=10000
 
 # Where evolution of miners is saved
-indexDir="mult-17"
+indexDir="test-200"
 
 tmpDir="tmp"
 
@@ -123,7 +124,7 @@ fi
 
 outputDir=$baseDir/$([ $1 ] && echo $1 || echo "simulation")
 
-[ ! -f $simulator ] && jq -n "{\"mean\": 5000000000,\"deviation\": 500000000,\"fullMempool\": $mempool,\"timeline\": [{\"start\": 0,\"epochType\": 0,\"values\": [5000000000]}]}" > $simulator
+[ ! -f $simulator ] && jq -n "{\"mean\": 5000000000,\"deviation\": 500000000,\"fullMempool\": $mempool,\"timeline\": [{\"start\": 0,\"epochType\": 0,\"values\": [5000000000]}, {\"start\": 11000,\"epochType\": 2,\"values\": []}]}" > $simulator
 
 [ ! -f $contracts ] && jq -n "{\"toContracts\":$to_contracts,\"contracts\":[{\"percentage\":100,\"length\":${length}}]}" > $contracts
 
@@ -148,6 +149,7 @@ set_fee_values() {
     value=$((fees * $1 / 100))
 
     # Might want to uncomment, but simulating with time-based reward is not recommended
+    # Added to main.cpp
     # if [ $(jq ".fullMempool" $simulator) == "false" ]
     # then
     #     value=$(echo "scale=0; $value * 2" | bc)
@@ -202,7 +204,7 @@ then
 
         set_fee_values $i
 
-        # echo $newValues | jq ".toContracts = ${i}"  > "$tmp" && mv "$tmp"  $contracts
+        echo $newValues | jq ".toContracts = ${i}"  > "$tmp" && mv "$tmp"  $contracts
         jq ".contracts = ${newValues}.contracts | .toContracts = ${i}" $contracts > "$tmp" && mv "$tmp"  $contracts
         
         run_simulation
@@ -233,7 +235,7 @@ then
 
     if [ $PLOT ]
     then
-        plot $outputDir/single $(jq '.contracts | length' $contracts)-$i
+        plot $outputDir/single $(jq '.contracts | length' $contracts)-percentage
     fi
 fi
 

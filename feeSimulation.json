@@ -5,136 +5,2403 @@
   "timeline": [
     {
       "start": 0,
-      "epochType": 2,
+      "epochType": 0,
       "values": [
-        5000000000,
-        500000000
+        4689999995
       ]
     },
     {
-      "start": 2500,
-      "epochType": 1,
+      "start": 144,
+      "epochType": 0,
       "values": [
-        5000000000,
-        10000000000
+        4724999995
       ]
     },
     {
-      "start": 3000,
-      "epochType": 2,
+      "start": 288,
+      "epochType": 0,
       "values": [
-        10000000000,
-        500000000
+        5004999994
       ]
     },
     {
-      "start": 9500,
-      "epochType": 1,
+      "start": 432,
+      "epochType": 0,
       "values": [
-        10000000000,
-        25000000000
+        5459999994
       ]
     },
     {
-      "start": 10000,
-      "epochType": 2,
+      "start": 576,
+      "epochType": 0,
       "values": [
-        25000000000,
-        2500000000
+        5704999994
       ]
     },
     {
-      "start": 19500,
-      "epochType": 1,
+      "start": 720,
+      "epochType": 0,
       "values": [
-        25000000000,
-        10000000000
+        4934999995
       ]
     },
     {
-      "start": 20000,
-      "epochType": 2,
+      "start": 864,
+      "epochType": 0,
       "values": [
-        10000000000,
-        1000000000
+        4514999995
       ]
     },
     {
-      "start": 24500,
-      "epochType": 1,
+      "start": 1008,
+      "epochType": 0,
       "values": [
-        10000000000,
-        1000000000
+        4689999995
       ]
     },
     {
-      "start": 25000,
-      "epochType": 2,
+      "start": 1152,
+      "epochType": 0,
       "values": [
-        1000000000,
-        100000000
+        4724999995
       ]
     },
     {
-      "start": 30000,
-      "epochType": 1,
+      "start": 1296,
+      "epochType": 0,
       "values": [
-        1000000000,
-        15000000000
+        5004999994
       ]
     },
     {
-      "start": 35000,
-      "epochType": 1,
+      "start": 1440,
+      "epochType": 0,
       "values": [
-        15000000000,
-        5000000000
+        5459999994
       ]
     },
     {
-      "start": 39500,
-      "epochType": 1,
+      "start": 1584,
+      "epochType": 0,
       "values": [
-        5000000000,
-        1000000000
+        5704999994
       ]
     },
     {
-      "start": 40000,
-      "epochType": 2,
+      "start": 1728,
+      "epochType": 0,
       "values": [
-        1000000000,
-        100000000
+        4934999995
       ]
     },
     {
-      "start": 44500,
-      "epochType": 1,
+      "start": 1872,
+      "epochType": 0,
       "values": [
-        1000000000,
-        10000000000
+        4514999995
       ]
     },
     {
-      "start": 45000,
-      "epochType": 2,
+      "start": 2016,
+      "epochType": 0,
       "values": [
-        10000000000,
-        1000000000
+        4689999995
       ]
     },
     {
-      "start": 49500,
-      "epochType": 1,
+      "start": 2160,
+      "epochType": 0,
       "values": [
-        10000000000,
-        5000000000
+        4724999995
       ]
     },
     {
-      "start": 50000,
-      "epochType": 2,
+      "start": 2304,
+      "epochType": 0,
       "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 2448,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 2592,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 2736,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 2880,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 3024,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 3168,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 3312,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 3456,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 3600,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 3744,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 3888,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 4032,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 4176,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 4320,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 4464,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 4608,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 4752,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 4896,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 5040,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 5184,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 5328,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 5472,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 5616,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 5760,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 5904,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 6048,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 6192,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 6336,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 6480,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 6624,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 6768,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 6912,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 7056,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 7200,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 7344,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 7488,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 7632,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 7776,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 7920,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 8064,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 8208,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 8352,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 8496,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 8640,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 8784,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 8928,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 9072,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 9216,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 9360,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 9504,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 9648,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 9792,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 9936,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 10080,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 10224,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 10368,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 10512,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 10656,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 10800,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 10944,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 11088,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 11232,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 11376,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 11520,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 11664,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 11808,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 11952,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 12096,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 12240,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 12384,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 12528,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 12672,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 12816,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 12960,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 13104,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 13248,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 13392,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 13536,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 13680,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 13824,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 13968,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 14112,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 14256,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 14400,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 14544,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 14688,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 14832,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 14976,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 15120,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 15264,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 15408,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 15552,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 15696,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 15840,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 15984,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 16128,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 16272,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 16416,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 16560,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 16704,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 16848,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 16992,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 17136,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 17280,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 17424,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 17568,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 17712,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 17856,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 18000,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 18144,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 18288,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 18432,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 18576,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 18720,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 18864,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 19008,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 19152,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 19296,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 19440,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 19584,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 19728,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 19872,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 20016,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 20160,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 20304,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 20448,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 20592,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 20736,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 20880,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 21024,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 21168,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 21312,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 21456,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 21600,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 21744,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 21888,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 22032,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 22176,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 22320,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 22464,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 22608,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 22752,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 22896,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 23040,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 23184,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 23328,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 23472,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 23616,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 23760,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 23904,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 24048,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 24192,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 24336,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 24480,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 24624,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 24768,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 24912,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 25056,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 25200,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 25344,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 25488,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 25632,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 25776,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 25920,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 26064,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 26208,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 26352,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 26496,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 26640,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 26784,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 26928,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 27072,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 27216,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 27360,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 27504,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 27648,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 27792,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 27936,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 28080,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 28224,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 28368,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 28512,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 28656,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 28800,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 28944,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 29088,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 29232,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 29376,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 29520,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 29664,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 29808,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 29952,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 30096,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 30240,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 30384,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 30528,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 30672,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 30816,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 30960,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 31104,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 31248,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 31392,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 31536,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 31680,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 31824,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 31968,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 32112,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 32256,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 32400,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 32544,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 32688,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 32832,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 32976,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 33120,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 33264,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 33408,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 33552,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 33696,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 33840,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 33984,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 34128,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 34272,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 34416,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 34560,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 34704,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 34848,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 34992,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 35136,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 35280,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 35424,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 35568,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 35712,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 35856,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 36000,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 36144,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 36288,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 36432,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 36576,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 36720,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 36864,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 37008,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 37152,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 37296,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 37440,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 37584,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 37728,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 37872,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 38016,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 38160,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 38304,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 38448,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 38592,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 38736,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 38880,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 39024,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 39168,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 39312,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 39456,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 39600,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 39744,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 39888,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 40032,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 40176,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 40320,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 40464,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 40608,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 40752,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 40896,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 41040,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 41184,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 41328,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 41472,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 41616,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 41760,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 41904,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 42048,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 42192,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 42336,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 42480,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 42624,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 42768,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 42912,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 43056,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 43200,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 43344,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 43488,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 43632,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 43776,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 43920,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 44064,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 44208,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 44352,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 44496,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 44640,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 44784,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 44928,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 45072,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 45216,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 45360,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 45504,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 45648,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 45792,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 45936,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 46080,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 46224,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 46368,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 46512,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 46656,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 46800,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 46944,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 47088,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 47232,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 47376,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 47520,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 47664,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 47808,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 47952,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 48096,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 48240,
+      "epochType": 0,
+      "values": [
+        4514999995
+      ]
+    },
+    {
+      "start": 48384,
+      "epochType": 0,
+      "values": [
+        4689999995
+      ]
+    },
+    {
+      "start": 48528,
+      "epochType": 0,
+      "values": [
+        4724999995
+      ]
+    },
+    {
+      "start": 48672,
+      "epochType": 0,
+      "values": [
+        5004999994
+      ]
+    },
+    {
+      "start": 48816,
+      "epochType": 0,
+      "values": [
+        5459999994
+      ]
+    },
+    {
+      "start": 48960,
+      "epochType": 0,
+      "values": [
+        5704999994
+      ]
+    },
+    {
+      "start": 49104,
+      "epochType": 0,
+      "values": [
+        4934999995
+      ]
+    },
+    {
+      "start": 49248,
+      "epochType": 0,
+      "values": [
+        4514999995
       ]
     }
   ]
