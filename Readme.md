@@ -14,6 +14,9 @@ The xcode project file expects the headers to be located at /usr/local/include a
 library files to be located at /usr/local/lib so these must be updated if your
 configuration differs.
 
+Otherwise you might set the location of dependant library to variable LD_LIBRARY_PATH as
+`LD_LIBRARY_PATH=<path>` and then export this variable as `export LD_LIBRARY_PATH`.
+
 The code for the mining simulator is written in standard C++14. In the future we will
 release this code with a makefile so that it is easily compilable in a
 cross-platform manner.
