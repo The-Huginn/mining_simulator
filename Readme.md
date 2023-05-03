@@ -63,4 +63,4 @@ License
 -------
 
 Bitcoin Mining Simulator is licensed under GNU GPLv3. Additional code has been included from
-[arithmetic_type](https://github.com/gnzlbg/arithmetic_type) which is licensed Boost Software License Version 1.0.
+[arithmetic_type](https://github.com/gnzlbg/arithmetic_type) and [json](https://github.com/nlohmann/json) which is licensed Boost Software License Version 1.0 and MIT respectively.
