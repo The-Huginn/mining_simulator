@@ -91,7 +91,7 @@ void runStratGame(RunSettings settings, std::vector<std::unique_ptr<LearningStra
     }
     
 //    LearningModel *learningModel = new MultiplicativeWeightsLearningModel(learningStrategies, learningMiners.size(), resultFolder);
-    LearningModel *learningModel = new Exp3LearningModel(learningStrategies, learningMiners.size(), resultFolder, "contracts");
+    LearningModel *learningModel = new Exp3LearningModel(learningStrategies, learningMiners.size(), resultFolder);
     
     MinerGroup minerGroup(std::move(miners));
     
